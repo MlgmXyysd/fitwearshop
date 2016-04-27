@@ -68,12 +68,6 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		</property>
 	</bean>
 	<!-- 静态资源 -->
-	<mvc:resources mapping="/images/**" location="/images/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/js/**" location="/js/"
-		cache-period="31556926" />
-	<mvc:resources mapping="/css/**" location="/css/"
-		cache-period="31556926" />
-
+	<mvc:resources mapping="/static/**" location="/static/" cache-period="31556926" />
 
 </beans>  

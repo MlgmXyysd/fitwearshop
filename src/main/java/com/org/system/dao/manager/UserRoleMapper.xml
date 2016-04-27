@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.system.dao.manager.UserRoleMapper">
+
+	<!--实体映射-->
+	<resultMap id="UserRoleMap" type="com.org.system.model.manager.UserRole">
+		<!---->
+		<result column="id"  property="id" />
+		<!---->
+		<result column="user_id"  property="userId" />
+		<!---->
+		<result column="role_id"  property="roleId" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="columnList">
+	id,	user_id,	role_id
+	</sql>
+
+
+	<!-- 查询条件-->
+	<sql id="wheresql">
+	<where>
+			<if test="id != null and id != '' ">
+				 and id = #{id}
+			</if>
+			<if test="userId != null and userId != '' ">
+				 and user_id = #{userId}
+			</if>
+			<if test="roleId != null and roleId != '' ">
+				 and role_id = #{roleId}
+			</if>
+
+	</where>
+	</sql>
+
+
+	<sql id="limitsql">
+			<if test="limitStart != null and pageSize != null">
+				 <![CDATA[  
+				 order by id desc limit #{limitStart} , #{pageSize} 
+				 ]]>  
+			</if>
+	</sql>	<!-- 添加 -->
+	<insert id="save" parameterType="com.org.system.model.manager.UserRole">
+		 <selectKey resultType="long" keyProperty="id">
+		 SELECT LAST_INSERT_ID()
+		 </selectKey>
+		 INSERT INTO user_role
+ 		(USER_ID,ROLE_ID) 
+		 VALUES 
+ 		(#{userId},#{roleId}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.org.system.model.manager.UserRole">
+		 INSERT INTO user_role
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="userId != null">
+				 user_id,
+			</if>
+			<if test="roleId != null">
+				 role_id,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null and id!='' ">
+				 #{id},
+			</if>
+			<if test="userId!=null and userId!='' ">
+				 #{userId},
+			</if>
+			<if test="roleId!=null and roleId!='' ">
+				 #{roleId},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 -->
+	<insert id="saveBatchUserRole" parameterType="java.util.List">
+		 INSERT INTO user_role
+ 		(user_id,role_id) 
+		 VALUES 
+ 		 <foreach collection="list" item="item" index="index" separator="," >  
+ 		(#{item.userId},#{item.roleId}) 
+ 		 </foreach>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.UserRole">
+		 UPDATE user_role
+		 SET 
+			<if test="userId != null">
+				 user_id = #{userId},
+			</if>
+			<if test="roleId != null">
+				 role_id = #{roleId},
+			</if>
+		 WHERE id = #{id}
+	</update>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey"  resultMap="UserRoleMap" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM user_role
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询  List 查询 -->
+	<select id="queryList" resultMap="UserRoleMap" parameterType="com.org.system.model.manager.UserRole">
+		 SELECT
+		 <include refid="columnList" />
+		 FROM user_role
+		  
+		 <include refid="wheresql" />
+	</select>
+
+	<!-- 查询 分页总数 -->
+	<select id="queryCount"  resultType="java.lang.Integer"  parameterType="com.org.system.model.manager.UserRole">
+		 SELECT
+		 count(1)
+		 FROM user_role
+		  
+		 <include refid="wheresql" />
+	</select>
+	<!-- 查询 分页查询 -->
+	<select id="queryPageList" resultMap="UserRoleMap"  parameterType="com.org.system.model.manager.UserRole">
+		 SELECT
+		 <include refid="columnList" />
+		 FROM user_role
+		  
+		 <include refid="wheresql" />
+		 <include refid="limitsql" />
+	</select>
+
+</mapper>

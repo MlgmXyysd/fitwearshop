@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.system.dao.manager.PermissionMapper">
+
+	<!--实体映射-->
+	<resultMap id="PermissionMap" type="com.org.system.model.manager.Permission">
+		<!---->
+		<result column="id"  property="id" />
+		<!--父节点名称-->
+		<result column="pid"  property="pid" />
+		<!--名称-->
+		<result column="name"  property="name" />
+		<!--类型:菜单or功能-->
+		<result column="type"  property="type" />
+		<!--排序-->
+		<result column="sort"  property="sort" />
+		<!---->
+		<result column="url"  property="url" />
+		<!--菜单编码-->
+		<result column="perm_code"  property="permCode" />
+		<!---->
+		<result column="icon"  property="icon" />
+		<!---->
+		<result column="state"  property="state" />
+		<!---->
+		<result column="description"  property="description" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="columnList">
+	id,	pid,	name,	type,	sort,	url,	perm_code,	icon,	state,	description
+	</sql>
+
+
+	<!-- 查询条件-->
+	<sql id="wheresql">
+	<where>
+			<if test="id != null and id != '' ">
+				 and id = #{id}
+			</if>
+			<if test="pid != null and pid != '' ">
+				 and pid = #{pid}
+			</if>
+			<if test="name != null and name != '' ">
+				 and name = #{name}
+			</if>
+			<if test="type != null and type != '' ">
+				 and type = #{type}
+			</if>
+			<if test="sort != null and sort != '' ">
+				 and sort = #{sort}
+			</if>
+			<if test="url != null and url != '' ">
+				 and url = #{url}
+			</if>
+			<if test="permCode != null and permCode != '' ">
+				 and perm_code = #{permCode}
+			</if>
+			<if test="icon != null and icon != '' ">
+				 and icon = #{icon}
+			</if>
+			<if test="state != null and state != '' ">
+				 and state = #{state}
+			</if>
+			<if test="description != null and description != '' ">
+				 and description = #{description}
+			</if>
+
+	</where>
+	</sql>
+
+
+	<sql id="limitsql">
+			<if test="limitStart != null and pageSize != null">
+				 <![CDATA[  
+				 order by id desc limit #{limitStart} , #{pageSize} 
+				 ]]>  
+			</if>
+	</sql>	<!-- 添加 -->
+	<insert id="save" parameterType="com.org.system.model.manager.Permission">
+		 <selectKey resultType="long" keyProperty="id">
+		 SELECT LAST_INSERT_ID()
+		 </selectKey>
+		 INSERT INTO permission
+ 		(PID,NAME,TYPE,SORT,URL,PERM_CODE,ICON,STATE,DESCRIPTION) 
+		 VALUES 
+ 		(#{pid},#{name},#{type},#{sort},#{url},#{permCode},#{icon},#{state},#{description}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.org.system.model.manager.Permission">
+		 INSERT INTO permission
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="pid != null">
+				 pid,
+			</if>
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="type != null">
+				 type,
+			</if>
+			<if test="sort != null">
+				 sort,
+			</if>
+			<if test="url != null">
+				 url,
+			</if>
+			<if test="permCode != null">
+				 perm_code,
+			</if>
+			<if test="icon != null">
+				 icon,
+			</if>
+			<if test="state != null">
+				 state,
+			</if>
+			<if test="description != null">
+				 description,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null and id!='' ">
+				 #{id},
+			</if>
+			<if test="pid!=null and pid!='' ">
+				 #{pid},
+			</if>
+			<if test="name!=null and name!='' ">
+				 #{name},
+			</if>
+			<if test="type!=null and type!='' ">
+				 #{type},
+			</if>
+			<if test="sort!=null and sort!='' ">
+				 #{sort},
+			</if>
+			<if test="url!=null and url!='' ">
+				 #{url},
+			</if>
+			<if test="permCode!=null and permCode!='' ">
+				 #{permCode},
+			</if>
+			<if test="icon!=null and icon!='' ">
+				 #{icon},
+			</if>
+			<if test="state!=null and state!='' ">
+				 #{state},
+			</if>
+			<if test="description!=null and description!='' ">
+				 #{description},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 -->
+	<insert id="saveBatchPermission" parameterType="java.util.List">
+		 INSERT INTO permission
+ 		(pid,name,type,sort,url,perm_code,icon,state,description) 
+		 VALUES 
+ 		 <foreach collection="list" item="item" index="index" separator="," >  
+ 		(#{item.pid},#{item.name},#{item.type},#{item.sort},#{item.url},#{item.permCode},#{item.icon},#{item.state},#{item.description}) 
+ 		 </foreach>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.Permission">
+		 UPDATE permission
+		 SET 
+			<if test="pid != null">
+				 pid = #{pid},
+			</if>
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="type != null">
+				 type = #{type},
+			</if>
+			<if test="sort != null">
+				 sort = #{sort},
+			</if>
+			<if test="url != null">
+				 url = #{url},
+			</if>
+			<if test="permCode != null">
+				 perm_code = #{permCode},
+			</if>
+			<if test="icon != null">
+				 icon = #{icon},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="description != null">
+				 description = #{description},
+			</if>
+		 WHERE id = #{id}
+	</update>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey"  resultMap="PermissionMap" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM permission
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询  List 查询 -->
+	<select id="queryList" resultMap="PermissionMap" parameterType="com.org.system.model.manager.Permission">
+		 SELECT
+		 <include refid="columnList" />
+		 FROM permission
+		  
+		 <include refid="wheresql" />
+	</select>
+
+	<!-- 查询 分页总数 -->
+	<select id="queryCount"  resultType="java.lang.Integer"  parameterType="com.org.system.model.manager.Permission">
+		 SELECT
+		 count(1)
+		 FROM permission
+		  
+		 <include refid="wheresql" />
+	</select>
+	<!-- 查询 分页查询 -->
+	<select id="queryPageList" resultMap="PermissionMap"  parameterType="com.org.system.model.manager.Permission">
+		 SELECT
+		 <include refid="columnList" />
+		 FROM permission
+		  
+		 <include refid="wheresql" />
+		 <include refid="limitsql" />
+	</select>
+
+</mapper>

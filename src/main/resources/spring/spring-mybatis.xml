@@ -41,15 +41,13 @@
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:com/org/fitwear/dao/shop/*.xml" />
+		<property name="mapperLocations" value="classpath:com/org/**/dao/**/*.xml" />
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.org.fitwear.dao.shop" />
+		<property name="basePackage" value="com.org.**.dao.**" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
-
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
@@ -62,21 +60,19 @@
 			<tx:method name="edit*" propagation="REQUIRED" />
 			<tx:method name="delete*" propagation="REQUIRED" />
 			<tx:method name="remove*" propagation="REQUIRED" />
-
 			<tx:method name="get*" propagation="SUPPORTS" />
 			<tx:method name="find*" propagation="SUPPORTS" />
 			<tx:method name="search*" propagation="SUPPORTS" />
 			<tx:method name="*" propagation="SUPPORTS" />
 		</tx:attributes>
 	</tx:advice>
-
 	<aop:aspectj-autoproxy />
 
 	<aop:config>
 		<aop:pointcut id="transactionPointcut"
-			expression="execution(* com.org.fitwear.service.shop..*Impl.*(..))" />
+			expression="execution(* com.org.**.service.**..*Impl.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut"
 			advice-ref="transactionAdvice" />
 	</aop:config>
-
+	
 </beans>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.system.dao.manager.RoleMapper">
+
+	<!--实体映射-->
+	<resultMap id="RoleMap" type="com.org.system.model.manager.Role">
+		<!---->
+		<result column="id"  property="id" />
+		<!---->
+		<result column="name"  property="name" />
+		<!---->
+		<result column="role_code"  property="roleCode" />
+		<!---->
+		<result column="description"  property="description" />
+		<!---->
+		<result column="sort"  property="sort" />
+		<!---->
+		<result column="del_flag"  property="delFlag" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="columnList">
+	id,	name,	role_code,	description,	sort,	del_flag
+	</sql>
+
+
+	<!-- 查询条件-->
+	<sql id="wheresql">
+	<where>
+			<if test="id != null and id != '' ">
+				 and id = #{id}
+			</if>
+			<if test="name != null and name != '' ">
+				 and name = #{name}
+			</if>
+			<if test="roleCode != null and roleCode != '' ">
+				 and role_code = #{roleCode}
+			</if>
+			<if test="description != null and description != '' ">
+				 and description = #{description}
+			</if>
+			<if test="sort != null and sort != '' ">
+				 and sort = #{sort}
+			</if>
+			<if test="delFlag != null and delFlag != '' ">
+				 and del_flag = #{delFlag}
+			</if>
+
+	</where>
+	</sql>
+
+
+	<sql id="limitsql">
+			<if test="limitStart != null and pageSize != null">
+				 <![CDATA[  
+				 order by id desc limit #{limitStart} , #{pageSize} 
+				 ]]>  
+			</if>
+	</sql>	<!-- 添加 -->
+	<insert id="save" parameterType="com.org.system.model.manager.Role">
+		 <selectKey resultType="long" keyProperty="id">
+		 SELECT LAST_INSERT_ID()
+		 </selectKey>
+		 INSERT INTO role
+ 		(NAME,ROLE_CODE,DESCRIPTION,SORT,DEL_FLAG) 
+		 VALUES 
+ 		(#{name},#{roleCode},#{description},#{sort},#{delFlag}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.org.system.model.manager.Role">
+		 INSERT INTO role
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="roleCode != null">
+				 role_code,
+			</if>
+			<if test="description != null">
+				 description,
+			</if>
+			<if test="sort != null">
+				 sort,
+			</if>
+			<if test="delFlag != null">
+				 del_flag,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null and id!='' ">
+				 #{id},
+			</if>
+			<if test="name!=null and name!='' ">
+				 #{name},
+			</if>
+			<if test="roleCode!=null and roleCode!='' ">
+				 #{roleCode},
+			</if>
+			<if test="description!=null and description!='' ">
+				 #{description},
+			</if>
+			<if test="sort!=null and sort!='' ">
+				 #{sort},
+			</if>
+			<if test="delFlag!=null and delFlag!='' ">
+				 #{delFlag},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 -->
+	<insert id="saveBatchRole" parameterType="java.util.List">
+		 INSERT INTO role
+ 		(name,role_code,description,sort,del_flag) 
+		 VALUES 
+ 		 <foreach collection="list" item="item" index="index" separator="," >  
+ 		(#{item.name},#{item.roleCode},#{item.description},#{item.sort},#{item.delFlag}) 
+ 		 </foreach>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.Role">
+		 UPDATE role
+		 SET 
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="roleCode != null">
+				 role_code = #{roleCode},
+			</if>
+			<if test="description != null">
+				 description = #{description},
+			</if>
+			<if test="sort != null">
+				 sort = #{sort},
+			</if>
+			<if test="delFlag != null">
+				 del_flag = #{delFlag},
+			</if>
+		 WHERE id = #{id}
+	</update>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey"  resultMap="RoleMap" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM role
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询  List 查询 -->
+	<select id="queryList" resultMap="RoleMap" parameterType="com.org.system.model.manager.Role">
+		 SELECT
+		 <include refid="columnList" />
+		 FROM role
+		  
+		 <include refid="wheresql" />
+	</select>
+
+	<!-- 查询 分页总数 -->
+	<select id="queryCount"  resultType="java.lang.Integer"  parameterType="com.org.system.model.manager.Role">
+		 SELECT
+		 count(1)
+		 FROM role
+		  
+		 <include refid="wheresql" />
+	</select>
+	<!-- 查询 分页查询 -->
+	<select id="queryPageList" resultMap="RoleMap"  parameterType="com.org.system.model.manager.Role">
+		 SELECT
+		 <include refid="columnList" />
+		 FROM role
+		 <include refid="wheresql" />
+		 <include refid="limitsql" />
+	</select>
+
+</mapper>
