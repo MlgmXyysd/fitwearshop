@@ -2,50 +2,51 @@ package com.org.system.service.manager;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.org.system.dao.manager.RoleMapper;
 import com.org.system.model.manager.Page;
 import com.org.system.model.manager.Role;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
+	@Autowired
+	private RoleMapper roleMapper;
+
 	public Role get(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return roleMapper.selectByPrimaryKey(id);
 	}
 
 	public void save(Role entity) {
-		// TODO Auto-generated method stub
-
+		roleMapper.save(entity);
 	}
 
 	public void update(Role entity) {
-		// TODO Auto-generated method stub
-
+		roleMapper.updateByPrimaryKey(entity);
 	}
 
 	public void delete(Role entity) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public List<Role> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return roleMapper.queryList(null);
 	}
 
 	public List<Role> search(Role entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return roleMapper.queryList(entity);
 	}
 
 	public Page<Role> search(Page<Role> page, Role entity) {
-		// TODO Auto-generated method stub
+		Integer count = roleMapper.queryPageCount(entity);
+		List<Role> list = roleMapper.queryPageList(entity);
 		return null;
 	}
 

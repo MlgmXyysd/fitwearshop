@@ -26,6 +26,47 @@ public class User {
 	private String delFlag;
 	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 	
+	
+	
+	/** default constructor */
+	public User() {
+	}
+	
+	public User(Integer id) {
+		this.id=id;
+	}
+
+	/** minimal constructor */
+	public User(String loginName, String name, String password) {
+		this.loginName = loginName;
+		this.name = name;
+		this.password = password;
+	}
+
+	/** full constructor */
+	public User(String loginName, String name, String password, String salt,
+			Date birthday, Short gender, String email, String phone,
+			String icon, Date createDate, String state,String description,
+			Integer loginCount, Date previousVisit, Date lastVisit,
+			String delFlag, Set<UserRole> userRoles) {
+		this.loginName = loginName;
+		this.name = name;
+		this.password = password;
+		this.salt = salt;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.email = email;
+		this.phone = phone;
+		this.icon = icon;
+		this.createDate = createDate;
+		this.state = state;
+		this.description=description;
+		this.loginCount = loginCount;
+		this.previousVisit = previousVisit;
+		this.lastVisit = lastVisit;
+		this.delFlag = delFlag;
+		this.userRoles = userRoles;
+	}
 	public Integer getId() {
 		return id;
 	}

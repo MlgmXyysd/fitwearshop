@@ -138,5 +138,23 @@
 		 <include refid="wheresql" />
 		 <include refid="limitsql" />
 	</select>
+	
+	
+	<!-- 查询 List 查询 -->
+	<select id="findRoleIds" resultMap="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		SELECT
+		select role_id
+		FROM user_role
+		WHERE
+		user_id = #{userId}
+	</select>
+	
+	<delete id="deleteRP" 
+	 parameterType="com.org.system.model.manager.UserRole">
+		delete from user_role
+		where user_id = #{userId}
+		and	role_id = #{roleId}
+	</delete>
 
 </mapper>

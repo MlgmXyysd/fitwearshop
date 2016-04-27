@@ -47,7 +47,7 @@ public interface RoleMapper{
 	 * 查询（根据主键ID查询）
 	 * 
 	 **/
-	 public Role  selectByPrimaryKey (Long id );
+	 public Role  selectByPrimaryKey (Integer id );
 
 	/**
 	 * 

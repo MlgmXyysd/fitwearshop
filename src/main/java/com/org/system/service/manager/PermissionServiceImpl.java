@@ -46,65 +46,62 @@ public class PermissionServiceImpl implements PermissionService {
 	 * @return 结果集合
 	 */
 	public List<Permission> getPermissions(Integer userId) {
-		Permission permission = new Permission();
-		permission.setPid(userId);
-		return permissionMapper.queryList(permission);
+		return permissionMapper.getPermissions(userId);
 	}
 
 	
 	public List<Permission> getMenus(Integer userId) {
 		
-		return null;
+		return permissionMapper.getMenus(userId);
 	}
 
 	public List<Permission> getMenus() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return permissionMapper.getMenus(null);
 	}
 
 	public List<Permission> getMenuOperation(Integer pid) {
-		// TODO Auto-generated method stub
-		return null;
+		return permissionMapper.getMenuOperation(pid);
 	}
 
 	public Permission get(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return permissionMapper.selectByPrimaryKey(id);
 	}
 
 	public void save(Permission entity) {
-		// TODO Auto-generated method stub
 
+		permissionMapper.save(entity);
 	}
 
 	public void update(Permission entity) {
-		// TODO Auto-generated method stub
 
+		permissionMapper.updateByPrimaryKey(entity);
 	}
 
 	public void delete(Permission entity) {
-		// TODO Auto-generated method stub
 
+//		permissionMapper.
 	}
 
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public List<Permission> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return permissionMapper.queryList(null);
 	}
 
 	public List<Permission> search(Permission entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return permissionMapper.queryList(entity);
 	}
 
 	public Page<Permission> search(Page<Permission> page, Permission entity) {
-		// TODO Auto-generated method stub
-		return null;
+		Page<Permission> p = new Page<Permission>();
+		Integer count = permissionMapper.queryPageCount(entity);
+		List<Permission> list = permissionMapper.queryPageList(entity);
+		p.setTotalCount(Long.valueOf(count));
+		p.setResult(list);
+		return p;
 	}
 
 }

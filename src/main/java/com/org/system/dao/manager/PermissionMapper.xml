@@ -236,5 +236,40 @@
 		 <include refid="wheresql" />
 		 <include refid="limitsql" />
 	</select>
+	
+	
+	<!-- 查询  List 查询 -->
+	<select id="getPermissions" resultMap="PermissionMap" parameterType="java.lang.Integer">
+		 SELECT
+		 p.id,	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
+		 FROM permission p
+		 INNER JOIN role_permission rp on p.ID=rp.PERMISSION_ID
+		 INNER JOIN role r ON  r.id=rp.ROLE_ID
+		 INNER JOIN user_role  ur ON ur.ROLE_ID =rp.ROLE_ID 
+		 INNER JOIN user u ON u.id = ur.USER_ID 
+		 where u.id=#{id} order by p.sort
+	</select>
+	
+	<select id="getMenus" resultMap="PermissionMap" parameterType="java.lang.Integer">
+		 SELECT
+		 p.id,	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
+		 FROM permission p
+		 INNER JOIN role_permission rp on p.ID=rp.PERMISSION_ID
+		 INNER JOIN role r ON  r.id=rp.ROLE_ID
+		 INNER JOIN user_role  ur ON ur.ROLE_ID =rp.ROLE_ID 
+		 INNER JOIN user u ON u.id = ur.USER_ID 
+		 where p.TYPE='F'  
+		 <if test="id != null and id != '' ">
+				 and u.id = #{id}
+		 </if>
+		 order by p.sort
+	</select>
+	
+	<select id="getMenuOperation" resultMap="PermissionMap" parameterType="java.lang.Integer">
+		 SELECT
+		 p.id,	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
+		 FROM permission p
+		 where p.TYPE='O' and p.PID=#{id} order by p.SORT
+	</select>
 
 </mapper>

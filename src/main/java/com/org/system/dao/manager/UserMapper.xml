@@ -334,5 +334,13 @@
 		 <include refid="wheresql" />
 		 <include refid="limitsql" />
 	</select>
+	
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByUserName"  resultMap="UserMap" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM user
+		 WHERE login_name = #{loginName}
+	</select>
 
 </mapper>

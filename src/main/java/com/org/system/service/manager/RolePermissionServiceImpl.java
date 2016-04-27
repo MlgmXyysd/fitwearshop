@@ -2,71 +2,91 @@ package com.org.system.service.manager;
 
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.org.system.dao.manager.RolePermissionMapper;
 import com.org.system.model.manager.Page;
+import com.org.system.model.manager.Permission;
+import com.org.system.model.manager.Role;
 import com.org.system.model.manager.RolePermission;
+
 @Service
 public class RolePermissionServiceImpl implements RolePermissionService {
 
+	@Autowired
+	private RolePermissionMapper rolePermissionMapper;
+
 	public List<Integer> getPermissionIds(Integer roleId) {
-		// TODO Auto-generated method stub
-		return null;
+		return rolePermissionMapper.findPermissionIds(roleId);
 	}
 
 	public void updateRolePermission(Integer id, List<Integer> oldList, List<Integer> newList) {
-		// TODO Auto-generated method stub
+		// 是否删除
+		for (int i = 0, j = oldList.size(); i < j; i++) {
+			if (!newList.contains(oldList.get(i))) {
+				rolePermissionMapper.deleteRP(id, oldList.get(i));
+			}
+		}
+
+		// 是否添加
+		for (int i = 0, j = newList.size(); i < j; i++) {
+			if (!oldList.contains(newList.get(i))) {
+				rolePermissionMapper.save(getRolePermission(id, newList.get(i)));
+			}
+		}
 
 	}
 
 	public void clearUserPermCache(PrincipalCollection pc) {
-		// TODO Auto-generated method stub
-
+		RealmSecurityManager securityManager =  (RealmSecurityManager) SecurityUtils.getSecurityManager();
+		UserRealm userRealm = (UserRealm) securityManager.getRealms().iterator().next();
+	    userRealm.clearCachedAuthorizationInfo(pc);
 	}
 
 	public RolePermission getRolePermission(Integer roleId, Integer permissionId) {
-		// TODO Auto-generated method stub
-		return null;
+		RolePermission rp=new RolePermission();
+		rp.setRole(new Role(roleId));
+		rp.setPermission(new Permission(permissionId));
+		return rp;
 	}
 
 	public RolePermission get(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return rolePermissionMapper.selectByPrimaryKey(id);
 	}
 
 	public void save(RolePermission entity) {
-		// TODO Auto-generated method stub
-
+		rolePermissionMapper.save(entity);
 	}
 
 	public void update(RolePermission entity) {
-		// TODO Auto-generated method stub
 
+		rolePermissionMapper.updateByPrimaryKey(entity);
 	}
 
 	public void delete(RolePermission entity) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public List<RolePermission> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return rolePermissionMapper.queryList(null);
 	}
 
 	public List<RolePermission> search(RolePermission entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return rolePermissionMapper.queryList(entity);
 	}
 
 	public Page<RolePermission> search(Page<RolePermission> page, RolePermission entity) {
-		// TODO Auto-generated method stub
+		Integer count = rolePermissionMapper.queryPageCount(entity);
+		List<RolePermission> list = rolePermissionMapper.queryPageList(entity);
 		return null;
 	}
 
