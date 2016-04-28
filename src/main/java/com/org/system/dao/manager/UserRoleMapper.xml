@@ -3,143 +3,76 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.system.dao.manager.UserRoleMapper">
 
-	<!--实体映射-->
-	<resultMap id="UserRoleMap" type="com.org.system.model.manager.UserRole">
-		<!---->
-		<result column="id"  property="id" />
-		<!---->
-		<result column="user_id"  property="userId" />
-		<!---->
-		<result column="role_id"  property="roleId" />
+	<resultMap id="BaseResultMap" type="com.org.system.model.manager.UserRole">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="role_id" property="roleId" jdbcType="INTEGER" />
 	</resultMap>
-
-
-	<!-- 通用查询结果列-->
-	<sql id="columnList">
-	id,	user_id,	role_id
+	<sql id="Base_Column_List">
+		id, user_id, role_id
 	</sql>
-
-
-	<!-- 查询条件-->
-	<sql id="wheresql">
-	<where>
-			<if test="id != null and id != '' ">
-				 and id = #{id}
-			</if>
-			<if test="userId != null and userId != '' ">
-				 and user_id = #{userId}
-			</if>
-			<if test="roleId != null and roleId != '' ">
-				 and role_id = #{roleId}
-			</if>
-
-	</where>
-	</sql>
-
-
-	<sql id="limitsql">
-			<if test="limitStart != null and pageSize != null">
-				 <![CDATA[  
-				 order by id desc limit #{limitStart} , #{pageSize} 
-				 ]]>  
-			</if>
-	</sql>	<!-- 添加 -->
-	<insert id="save" parameterType="com.org.system.model.manager.UserRole">
-		 <selectKey resultType="long" keyProperty="id">
-		 SELECT LAST_INSERT_ID()
-		 </selectKey>
-		 INSERT INTO user_role
- 		(USER_ID,ROLE_ID) 
-		 VALUES 
- 		(#{userId},#{roleId}) 
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from user_role
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user_role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.org.system.model.manager.UserRole">
+		insert into user_role (id, user_id, role_id
+		)
+		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{roleId,jdbcType=INTEGER}
+		)
 	</insert>
-
-	<!-- 添加 （匹配有值的字段）-->
 	<insert id="insertSelective" parameterType="com.org.system.model.manager.UserRole">
-		 INSERT INTO user_role
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
+		insert into user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
-				 id,
+				id,
 			</if>
 			<if test="userId != null">
-				 user_id,
+				user_id,
 			</if>
 			<if test="roleId != null">
-				 role_id,
+				role_id,
 			</if>
-
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id!=null and id!='' ">
-				 #{id},
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
 			</if>
-			<if test="userId!=null and userId!='' ">
-				 #{userId},
-			</if>
-			<if test="roleId!=null and roleId!='' ">
-				 #{roleId},
-			</if>
-		 </trim>
-	</insert>
-
-	<!-- 添加 -->
-	<insert id="saveBatchUserRole" parameterType="java.util.List">
-		 INSERT INTO user_role
- 		(user_id,role_id) 
-		 VALUES 
- 		 <foreach collection="list" item="item" index="index" separator="," >  
- 		(#{item.userId},#{item.roleId}) 
- 		 </foreach>
-	</insert>
-
-	<!-- 修 改-->
-	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.UserRole">
-		 UPDATE user_role
-		 SET 
 			<if test="userId != null">
-				 user_id = #{userId},
+				#{userId,jdbcType=INTEGER},
 			</if>
 			<if test="roleId != null">
-				 role_id = #{roleId},
+				#{roleId,jdbcType=INTEGER},
 			</if>
-		 WHERE id = #{id}
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.system.model.manager.UserRole">
+		update user_role
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey"  resultMap="UserRoleMap" parameterType="java.lang.Long">
-		 SELECT
-		 <include refid="Base_Column_List" />
-		 FROM user_role
-		 WHERE id = #{id}
-	</select>
+	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.UserRole">
+		update user_role
+		set user_id = #{userId,jdbcType=INTEGER},
+		role_id = #{roleId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 
-	<!-- 查询  List 查询 -->
-	<select id="queryList" resultMap="UserRoleMap" parameterType="com.org.system.model.manager.UserRole">
-		 SELECT
-		 <include refid="columnList" />
-		 FROM user_role
-		  
-		 <include refid="wheresql" />
-	</select>
-
-	<!-- 查询 分页总数 -->
-	<select id="queryCount"  resultType="java.lang.Integer"  parameterType="com.org.system.model.manager.UserRole">
-		 SELECT
-		 count(1)
-		 FROM user_role
-		  
-		 <include refid="wheresql" />
-	</select>
-	<!-- 查询 分页查询 -->
-	<select id="queryPageList" resultMap="UserRoleMap"  parameterType="com.org.system.model.manager.UserRole">
-		 SELECT
-		 <include refid="columnList" />
-		 FROM user_role
-		  
-		 <include refid="wheresql" />
-		 <include refid="limitsql" />
-	</select>
-	
-	
 	<!-- 查询 List 查询 -->
 	<select id="findRoleIds" resultMap="java.lang.Integer"
 		parameterType="java.lang.Integer">
@@ -147,14 +80,15 @@
 		select role_id
 		FROM user_role
 		WHERE
-		user_id = #{userId}
+		user_id =
+		#{userId}
 	</select>
-	
-	<delete id="deleteRP" 
-	 parameterType="com.org.system.model.manager.UserRole">
+
+	<delete id="deleteRP" parameterType="com.org.system.model.manager.UserRole">
 		delete from user_role
-		where user_id = #{userId}
-		and	role_id = #{roleId}
+		where
+		user_id = #{userId}
+		and role_id = #{roleId}
 	</delete>
 
 </mapper>

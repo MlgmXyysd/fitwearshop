@@ -2,345 +2,279 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.system.dao.manager.UserMapper">
-
-	<!--实体映射-->
-	<resultMap id="UserMap" type="com.org.system.model.manager.User">
-		<!---->
-		<result column="id"  property="id" />
-		<!---->
-		<result column="login_name"  property="loginName" />
-		<!---->
-		<result column="name"  property="name" />
-		<!---->
-		<result column="password"  property="password" />
-		<!---->
-		<result column="salt"  property="salt" />
-		<!---->
-		<result column="birthday"  property="birthday" />
-		<!---->
-		<result column="gender"  property="gender" />
-		<!---->
-		<result column="email"  property="email" />
-		<!---->
-		<result column="phone"  property="phone" />
-		<!---->
-		<result column="icon"  property="icon" />
-		<!---->
-		<result column="create_date"  property="createDate" />
-		<!---->
-		<result column="state"  property="state" />
-		<!---->
-		<result column="description"  property="description" />
-		<!---->
-		<result column="login_count"  property="loginCount" />
-		<!---->
-		<result column="previous_visit"  property="previousVisit" />
-		<!---->
-		<result column="last_visit"  property="lastVisit" />
-		<!---->
-		<result column="del_flag"  property="delFlag" />
+	<resultMap id="BaseResultMap" type="com.org.system.model.manager.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="salt" property="salt" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+		<result column="gender" property="gender" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="state" property="state" jdbcType="CHAR" />
+		<result column="login_count" property="loginCount" jdbcType="INTEGER" />
+		<result column="previous_visit" property="previousVisit"
+			jdbcType="TIMESTAMP" />
+		<result column="last_visit" property="lastVisit" jdbcType="TIMESTAMP" />
+		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 	</resultMap>
-
-
-	<!-- 通用查询结果列-->
-	<sql id="columnList">
-	id,	login_name,	name,	password,	salt,	birthday,	gender,	email,	phone,	icon,	create_date,	state,	description,	login_count,	previous_visit,	last_visit,	del_flag
+	<resultMap id="ResultMapWithBLOBs" type="com.org.system.model.manager.User"
+		extends="BaseResultMap">
+		<result column="description" property="description" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, login_name, name, password, salt, birthday, gender, email, phone,
+		icon, create_date,
+		state, login_count, previous_visit, last_visit, del_flag
 	</sql>
-
-
-	<!-- 查询条件-->
-	<sql id="wheresql">
-	<where>
-			<if test="id != null and id != '' ">
-				 and id = #{id}
-			</if>
-			<if test="loginName != null and loginName != '' ">
-				 and login_name = #{loginName}
-			</if>
-			<if test="name != null and name != '' ">
-				 and name = #{name}
-			</if>
-			<if test="password != null and password != '' ">
-				 and password = #{password}
-			</if>
-			<if test="salt != null and salt != '' ">
-				 and salt = #{salt}
-			</if>
-			<if test="birthday != null and birthday != '' ">
-				 and birthday = #{birthday}
-			</if>
-			<if test="gender != null and gender != '' ">
-				 and gender = #{gender}
-			</if>
-			<if test="email != null and email != '' ">
-				 and email = #{email}
-			</if>
-			<if test="phone != null and phone != '' ">
-				 and phone = #{phone}
-			</if>
-			<if test="icon != null and icon != '' ">
-				 and icon = #{icon}
-			</if>
-			<if test="createDate != null and createDate != '' ">
-				 and create_date = #{createDate}
-			</if>
-			<if test="state != null and state != '' ">
-				 and state = #{state}
-			</if>
-			<if test="description != null and description != '' ">
-				 and description = #{description}
-			</if>
-			<if test="loginCount != null and loginCount != '' ">
-				 and login_count = #{loginCount}
-			</if>
-			<if test="previousVisit != null and previousVisit != '' ">
-				 and previous_visit = #{previousVisit}
-			</if>
-			<if test="lastVisit != null and lastVisit != '' ">
-				 and last_visit = #{lastVisit}
-			</if>
-			<if test="delFlag != null and delFlag != '' ">
-				 and del_flag = #{delFlag}
-			</if>
-
-	</where>
+	<sql id="Blob_Column_List">
+		description
 	</sql>
-
-
-	<sql id="limitsql">
-			<if test="limitStart != null and pageSize != null">
-				 <![CDATA[  
-				 order by id desc limit #{limitStart} , #{pageSize} 
-				 ]]>  
-			</if>
-	</sql>	<!-- 添加 -->
-	<insert id="save" parameterType="com.org.system.model.manager.User">
-		 <selectKey resultType="long" keyProperty="id">
-		 SELECT LAST_INSERT_ID()
-		 </selectKey>
-		 INSERT INTO user
- 		(LOGIN_NAME,NAME,PASSWORD,SALT,BIRTHDAY,GENDER,EMAIL,PHONE,ICON,CREATE_DATE,STATE,DESCRIPTION,LOGIN_COUNT,PREVIOUS_VISIT,LAST_VISIT,DEL_FLAG) 
-		 VALUES 
- 		(#{loginName},#{name},#{password},#{salt},#{birthday},#{gender},#{email},#{phone},#{icon},#{createDate},#{state},#{description},#{loginCount},#{previousVisit},#{lastVisit},#{delFlag}) 
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from user
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.org.system.model.manager.User">
+		insert into user (id, login_name, name,
+		password, salt, birthday,
+		gender, email, phone,
+		icon, create_date, state,
+		login_count, previous_visit, last_visit,
+		del_flag, description)
+		values (#{id,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+		#{gender,jdbcType=SMALLINT}, #{email,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{icon,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=CHAR},
+		#{loginCount,jdbcType=INTEGER}, #{previousVisit,jdbcType=TIMESTAMP},
+		#{lastVisit,jdbcType=TIMESTAMP},
+		#{delFlag,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
 	</insert>
-
-	<!-- 添加 （匹配有值的字段）-->
 	<insert id="insertSelective" parameterType="com.org.system.model.manager.User">
-		 INSERT INTO user
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
-				 id,
+				id,
 			</if>
 			<if test="loginName != null">
-				 login_name,
+				login_name,
 			</if>
 			<if test="name != null">
-				 name,
+				name,
 			</if>
 			<if test="password != null">
-				 password,
+				password,
 			</if>
 			<if test="salt != null">
-				 salt,
+				salt,
 			</if>
 			<if test="birthday != null">
-				 birthday,
+				birthday,
 			</if>
 			<if test="gender != null">
-				 gender,
+				gender,
 			</if>
 			<if test="email != null">
-				 email,
+				email,
 			</if>
 			<if test="phone != null">
-				 phone,
+				phone,
 			</if>
 			<if test="icon != null">
-				 icon,
+				icon,
 			</if>
 			<if test="createDate != null">
-				 create_date,
+				create_date,
 			</if>
 			<if test="state != null">
-				 state,
-			</if>
-			<if test="description != null">
-				 description,
+				state,
 			</if>
 			<if test="loginCount != null">
-				 login_count,
+				login_count,
 			</if>
 			<if test="previousVisit != null">
-				 previous_visit,
+				previous_visit,
 			</if>
 			<if test="lastVisit != null">
-				 last_visit,
+				last_visit,
 			</if>
 			<if test="delFlag != null">
-				 del_flag,
+				del_flag,
 			</if>
-
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id!=null and id!='' ">
-				 #{id},
+			<if test="description != null">
+				description,
 			</if>
-			<if test="loginName!=null and loginName!='' ">
-				 #{loginName},
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
 			</if>
-			<if test="name!=null and name!='' ">
-				 #{name},
-			</if>
-			<if test="password!=null and password!='' ">
-				 #{password},
-			</if>
-			<if test="salt!=null and salt!='' ">
-				 #{salt},
-			</if>
-			<if test="birthday!=null and birthday!='' ">
-				 #{birthday},
-			</if>
-			<if test="gender!=null and gender!='' ">
-				 #{gender},
-			</if>
-			<if test="email!=null and email!='' ">
-				 #{email},
-			</if>
-			<if test="phone!=null and phone!='' ">
-				 #{phone},
-			</if>
-			<if test="icon!=null and icon!='' ">
-				 #{icon},
-			</if>
-			<if test="createDate!=null and createDate!='' ">
-				 #{createDate},
-			</if>
-			<if test="state!=null and state!='' ">
-				 #{state},
-			</if>
-			<if test="description!=null and description!='' ">
-				 #{description},
-			</if>
-			<if test="loginCount!=null and loginCount!='' ">
-				 #{loginCount},
-			</if>
-			<if test="previousVisit!=null and previousVisit!='' ">
-				 #{previousVisit},
-			</if>
-			<if test="lastVisit!=null and lastVisit!='' ">
-				 #{lastVisit},
-			</if>
-			<if test="delFlag!=null and delFlag!='' ">
-				 #{delFlag},
-			</if>
-		 </trim>
-	</insert>
-
-	<!-- 添加 -->
-	<insert id="saveBatchUser" parameterType="java.util.List">
-		 INSERT INTO user
- 		(login_name,name,password,salt,birthday,gender,email,phone,icon,create_date,state,description,login_count,previous_visit,last_visit,del_flag) 
-		 VALUES 
- 		 <foreach collection="list" item="item" index="index" separator="," >  
- 		(#{item.loginName},#{item.name},#{item.password},#{item.salt},#{item.birthday},#{item.gender},#{item.email},#{item.phone},#{item.icon},#{item.createDate},#{item.state},#{item.description},#{item.loginCount},#{item.previousVisit},#{item.lastVisit},#{item.delFlag}) 
- 		 </foreach>
-	</insert>
-
-	<!-- 修 改-->
-	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.User">
-		 UPDATE user
-		 SET 
 			<if test="loginName != null">
-				 login_name = #{loginName},
+				#{loginName,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
-				 name = #{name},
+				#{name,jdbcType=VARCHAR},
 			</if>
 			<if test="password != null">
-				 password = #{password},
+				#{password,jdbcType=VARCHAR},
 			</if>
 			<if test="salt != null">
-				 salt = #{salt},
+				#{salt,jdbcType=VARCHAR},
 			</if>
 			<if test="birthday != null">
-				 birthday = #{birthday},
+				#{birthday,jdbcType=TIMESTAMP},
 			</if>
 			<if test="gender != null">
-				 gender = #{gender},
+				#{gender,jdbcType=SMALLINT},
 			</if>
 			<if test="email != null">
-				 email = #{email},
+				#{email,jdbcType=VARCHAR},
 			</if>
 			<if test="phone != null">
-				 phone = #{phone},
+				#{phone,jdbcType=VARCHAR},
 			</if>
 			<if test="icon != null">
-				 icon = #{icon},
+				#{icon,jdbcType=VARCHAR},
 			</if>
 			<if test="createDate != null">
-				 create_date = #{createDate},
+				#{createDate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="state != null">
-				 state = #{state},
-			</if>
-			<if test="description != null">
-				 description = #{description},
+				#{state,jdbcType=CHAR},
 			</if>
 			<if test="loginCount != null">
-				 login_count = #{loginCount},
+				#{loginCount,jdbcType=INTEGER},
 			</if>
 			<if test="previousVisit != null">
-				 previous_visit = #{previousVisit},
+				#{previousVisit,jdbcType=TIMESTAMP},
 			</if>
 			<if test="lastVisit != null">
-				 last_visit = #{lastVisit},
+				#{lastVisit,jdbcType=TIMESTAMP},
 			</if>
 			<if test="delFlag != null">
-				 del_flag = #{delFlag},
+				#{delFlag,jdbcType=VARCHAR},
 			</if>
-		 WHERE id = #{id}
+			<if test="description != null">
+				#{description,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.system.model.manager.User">
+		update user
+		<set>
+			<if test="loginName != null">
+				login_name = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="salt != null">
+				salt = #{salt,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gender != null">
+				gender = #{gender,jdbcType=SMALLINT},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=CHAR},
+			</if>
+			<if test="loginCount != null">
+				login_count = #{loginCount,jdbcType=INTEGER},
+			</if>
+			<if test="previousVisit != null">
+				previous_visit = #{previousVisit,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastVisit != null">
+				last_visit = #{lastVisit,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey"  resultMap="UserMap" parameterType="java.lang.Long">
-		 SELECT
-		 <include refid="Base_Column_List" />
-		 FROM user
-		 WHERE id = #{id}
-	</select>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.org.system.model.manager.User">
+		update user
+		set login_name = #{loginName,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		salt = #{salt,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=TIMESTAMP},
+		gender = #{gender,jdbcType=SMALLINT},
+		email = #{email,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		icon = #{icon,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		state = #{state,jdbcType=CHAR},
+		login_count = #{loginCount,jdbcType=INTEGER},
+		previous_visit = #{previousVisit,jdbcType=TIMESTAMP},
+		last_visit = #{lastVisit,jdbcType=TIMESTAMP},
+		del_flag = #{delFlag,jdbcType=VARCHAR},
+		description = #{description,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.User">
+		update user
+		set login_name = #{loginName,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		salt = #{salt,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=TIMESTAMP},
+		gender = #{gender,jdbcType=SMALLINT},
+		email = #{email,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		icon = #{icon,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		state = #{state,jdbcType=CHAR},
+		login_count = #{loginCount,jdbcType=INTEGER},
+		previous_visit = #{previousVisit,jdbcType=TIMESTAMP},
+		last_visit = #{lastVisit,jdbcType=TIMESTAMP},
+		del_flag = #{delFlag,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 
-	<!-- 查询  List 查询 -->
-	<select id="queryList" resultMap="UserMap" parameterType="com.org.system.model.manager.User">
-		 SELECT
-		 <include refid="columnList" />
-		 FROM user
-		  
-		 <include refid="wheresql" />
-	</select>
-
-	<!-- 查询 分页总数 -->
-	<select id="queryCount"  resultType="java.lang.Integer"  parameterType="com.org.system.model.manager.User">
-		 SELECT
-		 count(1)
-		 FROM user
-		  
-		 <include refid="wheresql" />
-	</select>
-	<!-- 查询 分页查询 -->
-	<select id="queryPageList" resultMap="UserMap"  parameterType="com.org.system.model.manager.User">
-		 SELECT
-		 <include refid="columnList" />
-		 FROM user
-		  
-		 <include refid="wheresql" />
-		 <include refid="limitsql" />
-	</select>
-	
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByUserName"  resultMap="UserMap" parameterType="java.lang.String">
-		 SELECT
-		 <include refid="Base_Column_List" />
-		 FROM user
-		 WHERE login_name = #{loginName}
+	<select id="selectByUserName" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		SELECT
+		id, login_name, name, password, salt, birthday, gender, email, phone,
+		icon, create_date, state, description, login_count, previous_visit,
+		last_visit, del_flag
+		FROM user
+		WHERE login_name = #{loginName,jdbcType=VARCHAR}
 	</select>
 
 </mapper>

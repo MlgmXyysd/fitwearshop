@@ -78,7 +78,7 @@ public class EntityUtil {
 																		// 包名
 
 	private final String driverName = "com.mysql.jdbc.Driver";
-	private final String dataName = "grouporder"; // 数据库名称
+	private final String dataName = "ahnew"; // 数据库名称
 	private final String user = "root";
 	private final String password = "root";
 	private final String url = "jdbc:mysql://localhost:3306/" + dataName + "?characterEncoding=utf8";

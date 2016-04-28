@@ -27,7 +27,6 @@ import com.org.system.model.manager.UserRole;
 import com.org.utils.CaptchaException;
 import com.org.utils.Encodes;
 
-
 /**
  * 用户登录授权service(shrioRealm)
  */
@@ -36,7 +35,7 @@ public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PermissionService permissionService;
 
@@ -44,17 +43,18 @@ public class UserRealm extends AuthorizingRealm {
 	 * 认证回调函数,登录时调用.
 	 */
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
-		UsernamePasswordCaptchaToken token = (UsernamePasswordCaptchaToken) authcToken; 
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
+			throws AuthenticationException {
+		UsernamePasswordCaptchaToken token = (UsernamePasswordCaptchaToken) authcToken;
 		User user = userService.getUser(token.getUsername());
-		
-		if (user != null&&doCaptchaValidate(token)) {
+
+		if (user != null && doCaptchaValidate(token)) {
 			byte[] salt = Encodes.decodeHex(user.getSalt());
-			ShiroUser shiroUser=new ShiroUser(user.getId(), user.getLoginName(), user.getName());
-			//设置用户session
-			Session session =SecurityUtils.getSubject().getSession();
+			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getLoginName(), user.getName());
+			// 设置用户session
+			Session session = SecurityUtils.getSubject().getSession();
 			session.setAttribute("user", user);
-			return new SimpleAuthenticationInfo(shiroUser,user.getPassword(), ByteSource.Util.bytes(salt), getName());
+			return new SimpleAuthenticationInfo(shiroUser, user.getPassword(), ByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;
 		}
@@ -67,40 +67,41 @@ public class UserRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
 		User user = userService.getUser(shiroUser.loginName);
-		
-		//把principals放session中 key=userId value=principals
-		SecurityUtils.getSubject().getSession().setAttribute(String.valueOf(user.getId()),SecurityUtils.getSubject().getPrincipals());
-		
+
+		// 把principals放session中 key=userId value=principals
+		SecurityUtils.getSubject().getSession().setAttribute(String.valueOf(user.getId()),
+				SecurityUtils.getSubject().getPrincipals());
+
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		//赋予角色
-		for(UserRole userRole:user.getUserRoles()){
+		// 赋予角色
+		for (UserRole userRole : user.getUserRoles()) {
 			info.addRole(userRole.getRole().getName());
 		}
-		//赋予权限
-		for(Permission permission:permissionService.getPermissions(user.getId())){
-			if(StringUtils.isEmpty(permission.getPermCode()))
-			info.addStringPermission(permission.getPermCode());
+		// 赋予权限
+		for (Permission permission : permissionService.getPermissions(user.getId())) {
+			if (StringUtils.isEmpty(permission.getPermCode()))
+				info.addStringPermission(permission.getPermCode());
 		}
-		
-		//设置登录次数、时间
+
+		// 设置登录次数、时间
 		userService.updateUserLogin(user);
 		return info;
 	}
-	
+
 	/**
 	 * 验证码校验
+	 * 
 	 * @param token
 	 * @return boolean
 	 */
-	protected boolean doCaptchaValidate(UsernamePasswordCaptchaToken token)
-	{
-		String captcha = (String) SecurityUtils.getSubject().getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-		if (captcha != null &&!captcha.equalsIgnoreCase(token.getCaptcha())){
+	protected boolean doCaptchaValidate(UsernamePasswordCaptchaToken token) {
+		String captcha = (String) SecurityUtils.getSubject().getSession()
+				.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		if (captcha != null && !captcha.equalsIgnoreCase(token.getCaptcha())) {
 			throw new CaptchaException("验证码错误！");
 		}
 		return true;
 	}
-		
 
 	/**
 	 * 设定Password校验的Hash算法与迭代次数.
@@ -128,7 +129,7 @@ public class UserRealm extends AuthorizingRealm {
 			this.name = name;
 		}
 
-		public Integer getId(){
+		public Integer getId() {
 			return id;
 		}
 
@@ -177,33 +178,33 @@ public class UserRealm extends AuthorizingRealm {
 			return true;
 		}
 	}
-	
+
 	@Override
-    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
-        super.clearCachedAuthorizationInfo(principals);
-    }
+	public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthorizationInfo(principals);
+	}
 
-    @Override
-    public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
-        super.clearCachedAuthenticationInfo(principals);
-    }
+	@Override
+	public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthenticationInfo(principals);
+	}
 
-    @Override
-    public void clearCache(PrincipalCollection principals) {
-        super.clearCache(principals);
-    }
+	@Override
+	public void clearCache(PrincipalCollection principals) {
+		super.clearCache(principals);
+	}
 
-    public void clearAllCachedAuthorizationInfo() {
-        getAuthorizationCache().clear();
-    }
+	public void clearAllCachedAuthorizationInfo() {
+		getAuthorizationCache().clear();
+	}
 
-    public void clearAllCachedAuthenticationInfo() {
-        getAuthenticationCache().clear();
-    }
+	public void clearAllCachedAuthenticationInfo() {
+		getAuthenticationCache().clear();
+	}
 
-    public void clearAllCache() {
-        clearAllCachedAuthenticationInfo();
-        clearAllCachedAuthorizationInfo();
-    }
- 
+	public void clearAllCache() {
+		clearAllCachedAuthenticationInfo();
+		clearAllCachedAuthorizationInfo();
+	}
+
 }

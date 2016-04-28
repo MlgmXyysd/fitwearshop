@@ -20,13 +20,13 @@
 	</bean>
 
 	<!-- Shiro Filter -->
-	<bean id="myCaptchaFilter" class="com.org.fitwear.service.manager.FormAuthenticationCaptchaFilter" />
+	<bean id="myCaptchaFilter" class="com.org.system.service.manager.FormAuthenticationCaptchaFilter" />
 
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="${adminPath}/login" />
-		<property name="successUrl" value="${adminPath}" />
+		<property name="loginUrl" value="/system/index/login" />
+		<property name="successUrl" value="/system/index" />
 		<property name="filters">
 			<map>
 				<entry key="authc" value-ref="myCaptchaFilter" />
@@ -35,9 +35,8 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/static/** = anon
-				${adminPath}/login = authc
-				${adminPath}/** =
-				user
+				/system/index/login = authc
+				/system/index/** =user
 				/rest/**=authcBasic
 			</value>
 		</property>

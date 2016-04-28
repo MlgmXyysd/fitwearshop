@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.serializer.PropertyFilter;
 import com.org.system.model.manager.Page;
 import com.org.system.model.manager.User;
 import com.org.system.service.manager.UserRoleService;
@@ -27,8 +26,6 @@ import com.org.system.service.manager.UserService;
 
 /**
  * 用户controller
- * @author ty
- * @date 2015年1月13日
  */
 @Controller
 @RequestMapping("system/user")

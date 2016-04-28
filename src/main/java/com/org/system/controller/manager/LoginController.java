@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 登录controller
- * @author ty
- * @date 2015年1月14日
  */
 @Controller
-@RequestMapping(value = "{adminPath}")
+@RequestMapping(value = "system/index")
 public class LoginController{
 	
 	/**
@@ -26,7 +24,7 @@ public class LoginController{
 	public String login() {
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated()||subject.isRemembered()){
-			return "redirect:"+"/a";
+			return "redirect:"+"system/index";
 		} 
 		return "system/login";
 	}
@@ -55,5 +53,6 @@ public class LoginController{
 		subject.logout();
 		return "system/login";
 	}
+	
 	
 }

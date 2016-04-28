@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.serializer.PropertyFilter;
 import com.org.system.model.manager.Page;
 import com.org.system.model.manager.Role;
 import com.org.system.model.manager.User;
@@ -31,8 +30,6 @@ import com.org.system.service.manager.RoleService;
 
 /**
  * 角色controller
- * @author ty
- * @date 2015年1月13日
  */
 @Controller
 @RequestMapping("system/role")
@@ -101,7 +98,7 @@ public class RoleController extends BaseController{
 		while(iterator.hasNext()){
 			HttpSession s=(HttpSession) iterator.next();
 			User user=(User) s.getAttribute("user");
-			if(user.getId()==id){
+			if(user.getId().intValue()==id.intValue()){
 				pc= (PrincipalCollection) s.getAttribute(String.valueOf(id));
 				//清空该用户权限缓存
 				rolePermissionService.clearUserPermCache(pc);

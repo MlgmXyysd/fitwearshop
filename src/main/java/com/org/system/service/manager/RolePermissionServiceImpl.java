@@ -35,7 +35,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 		// 是否添加
 		for (int i = 0, j = newList.size(); i < j; i++) {
 			if (!oldList.contains(newList.get(i))) {
-				rolePermissionMapper.save(getRolePermission(id, newList.get(i)));
+				rolePermissionMapper.insert(getRolePermission(id, newList.get(i)));
 			}
 		}
 
@@ -59,7 +59,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	}
 
 	public void save(RolePermission entity) {
-		rolePermissionMapper.save(entity);
+		rolePermissionMapper.insert(entity);
 	}
 
 	public void update(RolePermission entity) {
@@ -69,24 +69,25 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
 	public void delete(RolePermission entity) {
 
+		
 	}
 
 	public void delete(Integer id) {
-
+		rolePermissionMapper.deleteByPrimaryKey(id);
 	}
 
 	public List<RolePermission> getAll() {
 
-		return rolePermissionMapper.queryList(null);
+		return null;
 	}
 
 	public List<RolePermission> search(RolePermission entity) {
-		return rolePermissionMapper.queryList(entity);
+		return null;
 	}
 
 	public Page<RolePermission> search(Page<RolePermission> page, RolePermission entity) {
-		Integer count = rolePermissionMapper.queryPageCount(entity);
-		List<RolePermission> list = rolePermissionMapper.queryPageList(entity);
+		Integer count = null;
+		List<RolePermission> list = null;
 		return null;
 	}
 

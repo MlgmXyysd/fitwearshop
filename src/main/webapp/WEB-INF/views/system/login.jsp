@@ -23,7 +23,7 @@ request.setAttribute("error", error);
 </head>
 <body>
 	<div>
-	<form id="loginForm" action="${ctx}/a/login" method="post">
+	<form id="loginForm" action="${ctx}/system/index/login" method="post">
 		<div class="login_top">
 			<div class="login_title">
 				后台管理系统登录页 

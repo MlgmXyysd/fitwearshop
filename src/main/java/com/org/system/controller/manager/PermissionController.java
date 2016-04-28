@@ -22,8 +22,6 @@ import com.org.utils.UserUtil;
 
 /**
  * 权限controller
- * @author ty
- * @date 2015年1月13日
  */
 @Controller
 @RequestMapping("system/permission")

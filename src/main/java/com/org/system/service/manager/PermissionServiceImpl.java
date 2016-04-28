@@ -36,7 +36,7 @@ public class PermissionServiceImpl implements PermissionService {
 				}
 			}
 			if(!exist)
-				permissionMapper.save(permission);
+				permissionMapper.insert(permission);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	public void save(Permission entity) {
 
-		permissionMapper.save(entity);
+		permissionMapper.insert(entity);
 	}
 
 	public void update(Permission entity) {
@@ -84,22 +84,22 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	public void delete(Integer id) {
-
+		permissionMapper.deleteByPrimaryKey(id);
 	}
 
 	public List<Permission> getAll() {
-		return permissionMapper.queryList(null);
+		return null;
 	}
 
 	public List<Permission> search(Permission entity) {
-		return permissionMapper.queryList(entity);
+		return null;
 	}
 
 	public Page<Permission> search(Page<Permission> page, Permission entity) {
 		Page<Permission> p = new Page<Permission>();
-		Integer count = permissionMapper.queryPageCount(entity);
-		List<Permission> list = permissionMapper.queryPageList(entity);
-		p.setTotalCount(Long.valueOf(count));
+		Integer count = null;
+		List<Permission> list =null;
+		p.setTotalCount(count);
 		p.setResult(list);
 		return p;
 	}

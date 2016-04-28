@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	public void save(Role entity) {
-		roleMapper.save(entity);
+		roleMapper.insert(entity);
 	}
 
 	public void update(Role entity) {
@@ -32,21 +32,21 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	public void delete(Integer id) {
-
+		roleMapper.deleteByPrimaryKey(id);
 	}
 
 	public List<Role> getAll() {
 		
-		return roleMapper.queryList(null);
+		return null;
 	}
 
 	public List<Role> search(Role entity) {
-		return roleMapper.queryList(entity);
+		return null;
 	}
 
 	public Page<Role> search(Page<Role> page, Role entity) {
-		Integer count = roleMapper.queryPageCount(entity);
-		List<Role> list = roleMapper.queryPageList(entity);
+		Integer count = null;
+		List<Role> list = null;
 		return null;
 	}
 

@@ -22,7 +22,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	public void save(UserRole entity) {
-		userRoleMapper.save(entity);
+		userRoleMapper.insert(entity);
 	}
 
 	public void update(UserRole entity) {
@@ -34,21 +34,21 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 	public void delete(Integer id) {
-
+		userRoleMapper.deleteByPrimaryKey(id);
 	}
 
 	public List<UserRole> getAll() {
 
-		return userRoleMapper.queryList(null);
+		return null;
 	}
 
 	public List<UserRole> search(UserRole entity) {
-		return userRoleMapper.queryList(entity);
+		return null;
 	}
 
 	public Page<UserRole> search(Page<UserRole> page, UserRole entity) {
-		List<UserRole> list = userRoleMapper.queryPageList(entity);
-		Integer count = userRoleMapper.queryPageCount(entity);
+		List<UserRole> list = null;
+		Integer count = null;
 		return null;
 	}
 
@@ -67,7 +67,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		// 是否添加
 		for (int m = 0, n = roleIdsNew.size(); m < n; m++) {
 			if (!roleIdsOld.contains(roleIdsNew.get(m))) {
-				userRoleMapper.save(getUserRole(userId, roleIdsNew.get(m)));
+				userRoleMapper.insert(getUserRole(userId, roleIdsNew.get(m)));
 			}
 		}
 	}
