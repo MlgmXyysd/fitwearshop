@@ -16,8 +16,7 @@
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
 		<result column="state" property="state" jdbcType="CHAR" />
 		<result column="login_count" property="loginCount" jdbcType="INTEGER" />
-		<result column="previous_visit" property="previousVisit"
-			jdbcType="TIMESTAMP" />
+		<result column="previous_visit" property="previousVisit" jdbcType="TIMESTAMP" />
 		<result column="last_visit" property="lastVisit" jdbcType="TIMESTAMP" />
 		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 	</resultMap>
@@ -267,8 +266,7 @@
 	</update>
 
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByUserName" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.String">
+	<select id="selectByUserName" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
 		SELECT
 		id, login_name, name, password, salt, birthday, gender, email, phone,
 		icon, create_date, state, description, login_count, previous_visit,

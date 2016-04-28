@@ -74,7 +74,7 @@
 	</update>
 
 	<!-- 查询 List 查询 -->
-	<select id="findRoleIds" resultMap="java.lang.Integer"
+	<select id="findRoleIds" resultType="java.lang.Integer"
 		parameterType="java.lang.Integer">
 		SELECT
 		select role_id

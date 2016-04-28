@@ -78,7 +78,7 @@
 
 
 	<!-- 查询 List 查询 -->
-	<select id="findPermissionIds" resultMap="java.lang.Integer"
+	<select id="findPermissionIds" resultType="java.lang.Integer"
 		parameterType="java.lang.Integer">
 		SELECT
 		select PERMISSION_ID

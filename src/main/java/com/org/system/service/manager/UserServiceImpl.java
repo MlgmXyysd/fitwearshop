@@ -19,8 +19,7 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	public User getUser(String name) {
-		User user = userMapper.selectByPrimaryKey(1);
-		//User user = userMapper.selectByUserName(name);
+		User user = userMapper.selectByUserName(name);
 		return user;
 	}
 
