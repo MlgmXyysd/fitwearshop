@@ -2,7 +2,9 @@ package com.org.system.dao.manager;
 
 import java.util.List;
 
+import com.org.system.model.manager.Page;
 import com.org.system.model.manager.Permission;
+import com.org.system.model.manager.User;
 
 /**
  * 
@@ -49,5 +51,11 @@ public interface PermissionMapper {
 	 * @return 操作集合
 	 */
 	public List<Permission> getMenuOperation(Integer pid);
+
+	public long queryPageCount(Permission record);
+
+	public List<Permission> queryPageList(Page<Permission> page);
+
+	public List<Permission> queryList(Permission record);
 
 }

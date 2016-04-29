@@ -12,7 +12,7 @@ public class WelComeController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	@RequestMapping(value = "/welcome")
 	public String welcome() {
 		return "system/login";
 	}

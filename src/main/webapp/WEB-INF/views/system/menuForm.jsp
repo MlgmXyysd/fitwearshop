@@ -55,7 +55,7 @@ if(action=='create'){
 $('#pid').combotree({
 	width:180,
 	method:'GET',
-    url: '${ctx}/system/permission/menu/json',
+    url: '${ctx}/system/permission/menu/list.json',
     idField : 'id',
     textFiled : 'name',
 	parentField : 'pid',

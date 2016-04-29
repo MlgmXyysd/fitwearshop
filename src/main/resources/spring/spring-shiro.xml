@@ -26,7 +26,7 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/system/index/login" />
-		<property name="successUrl" value="/system/index" />
+		<property name="successUrl" value="/index" />
 		<property name="filters">
 			<map>
 				<entry key="authc" value-ref="myCaptchaFilter" />

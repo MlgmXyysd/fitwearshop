@@ -23,6 +23,14 @@
 		delete from role_permission
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
+	<delete id="deleteByRoleId" parameterType="java.lang.Integer">
+		delete from role_permission
+		where role_id = #{roleId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteBypermissionId" parameterType="java.lang.Integer">
+		delete from role_permission
+		where permission_id = #{permissionId,jdbcType=INTEGER}
+	</delete>
 	<insert id="insert" parameterType="com.org.system.model.manager.RolePermission">
 		insert into role_permission (id, role_id, permission_id
 		)
@@ -75,13 +83,11 @@
 	</update>
 
 
-
-
 	<!-- 查询 List 查询 -->
 	<select id="findPermissionIds" resultType="java.lang.Integer"
 		parameterType="java.lang.Integer">
 		SELECT
-		select PERMISSION_ID
+		PERMISSION_ID
 		FROM role_permission
 		WHERE
 		role_id = #{roleId}
@@ -91,5 +97,58 @@
 		where role_id = #{roleId}
 		and permission_id = #{permissionId}
 	</delete>
+	
+	<sql id="modelwheresql">
+		<where>
+			<if test="roleId != null">
+				and id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="roleId != null">
+				and role_id = #{roleId,jdbcType=INTEGER}
+			</if>
+			<if test="permissionId != null">
+				and permission_id = #{permissionId,jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.system.model.manager.RolePermission">
+		SELECT
+		count(1)
+		FROM role_permission
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+	
+	<select id="queryPageList" resultMap="BaseResultMap"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		id, role_id, permission_id
+		FROM role_permission
+		WHERE 1=1
+		<if test="param != null">
+			<if test="param.roleId != null">
+				and id = #{param.id,jdbcType=INTEGER}
+			</if>
+			<if test="param.roleId != null">
+				and role_id = #{param.roleId,jdbcType=INTEGER}
+			</if>
+			<if test="param.permissionId != null">
+				and permission_id = #{param.permissionId,jdbcType=INTEGER}
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+			limit #{first,jdbcType=INTEGER},#{pageSize ,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="queryList" resultMap="BaseResultMap"
+		parameterType="com.org.system.model.manager.RolePermission">
+		SELECT
+		id, role_id, permission_id
+		FROM role_permission
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
 
 </mapper>

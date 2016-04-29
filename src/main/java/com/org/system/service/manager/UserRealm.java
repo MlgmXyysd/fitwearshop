@@ -79,7 +79,7 @@ public class UserRealm extends AuthorizingRealm {
 		}
 		// 赋予权限
 		for (Permission permission : permissionService.getPermissions(user.getId())) {
-			if (StringUtils.isEmpty(permission.getPermCode()))
+			if (!StringUtils.isEmpty(permission.getPermCode()))
 				info.addStringPermission(permission.getPermCode());
 		}
 

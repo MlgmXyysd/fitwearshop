@@ -49,12 +49,11 @@ public class UserController extends BaseController {
 	 * 获取用户json
 	 */
 	@RequiresPermissions("sys:user:view")
-	@RequestMapping(value="json",method = RequestMethod.GET)
+	@RequestMapping(value="list.json",method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getData(HttpServletRequest request) {
-		Page<User> page = getPage(request);
-	    //List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-        // page = userService.search(page, filters);
+	public Map<String, Object> getData(HttpServletRequest request, User user) {
+		Page<User> page = getPage(request,user);
+        page = userService.search(page , user);
 		return getEasyUIData(page);
 	}
 
@@ -80,7 +79,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:add")
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseBody
-	public String create( User user, Model model) {
+	public String create(@ModelAttribute User user, Model model) {
 		userService.save(user);
 		return "success";
 	}
@@ -101,7 +100,7 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 修改用户
+	 * 更新用户
 	 * 
 	 * @param user
 	 * @param model
@@ -110,7 +109,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:update")
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
-	public String update( User user,Model model) {
+	public String update(@ModelAttribute User user,Model model) {
 		userService.update(user);
 		return "success";
 	}
@@ -122,7 +121,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("sys:user:delete")
-	@RequestMapping(value = "delete/{id}")
+	@RequestMapping(value = "delete/{id}/lag.html")
 	@ResponseBody
 	public String delete(@PathVariable("id") Integer id) {
 		userService.delete(id);
@@ -150,7 +149,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("sys:user:roleView")
-	@RequestMapping(value = "{id}/role")
+	@RequestMapping(value = "{id}/role.json")
 	@ResponseBody
 	public List<Integer> getRoleIdList(@PathVariable("id") Integer id) {
 		return userRoleService.getRoleIdList(id);
@@ -164,7 +163,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("sys:user:roleUpd")
-	@RequestMapping(value = "{id}/updateRole")
+	@RequestMapping(value = "{id}/updateRole.json")
 	@ResponseBody
 	public String updateUserRole(@PathVariable("id") Integer id,@RequestBody List<Integer> newRoleList) {
 		userRoleService.updateUserRole(id, userRoleService.getRoleIdList(id),newRoleList);

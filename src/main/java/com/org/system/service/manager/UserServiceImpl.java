@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.org.system.dao.manager.UserMapper;
+import com.org.system.dao.manager.UserRoleMapper;
 import com.org.system.model.manager.Page;
 import com.org.system.model.manager.User;
 import com.org.utils.Digests;
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private UserRoleMapper userRoleMapper;
 
 	public User getUser(String name) {
 		User user = userMapper.selectByUserName(name);
@@ -99,23 +102,26 @@ public class UserServiceImpl implements UserService {
 
 	public void delete(Integer id) {
 		if (!isSupervisor(id)) {
+			userRoleMapper.deleteByUserId(id);
 			userMapper.deleteByPrimaryKey(id);
 		}
 	}
 
 	public List<User> getAll() {
-		return null;
+		return userMapper.queryList(null);
 	}
 
 	public List<User> search(User entity) {
-		return null;
+		return userMapper.queryList(entity);
 	}
 
 	public Page<User> search(Page<User> page, User entity) {
-		Integer count = null;
-		List<User> list = null;
-
-		return null;
+		Page<User> p = new Page<User>();
+		Long count = userMapper.queryPageCount(entity);
+		List<User> list = userMapper.queryPageList(page);
+		p.setTotalCount(count);
+		p.setResult(list);
+		return p;
 	}
 
 }

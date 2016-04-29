@@ -123,4 +123,64 @@
 		del_flag = #{delFlag,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	
+	<sql id="modelwheresql">
+		<where>
+			<if test="name != null">
+				and name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="roleCode != null">
+				and role_code = #{roleCode,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				and sort = #{sort,jdbcType=SMALLINT}
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.system.model.manager.Role">
+		SELECT
+		count(1)
+		FROM role
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+	
+	<select id="queryPageList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		id, name, role_code, sort, del_flag,description
+		FROM role
+		WHERE 1=1
+		<if test="param != null">
+			<if test="param.name != null">
+				and name = #{param.name,jdbcType=VARCHAR}
+			</if>
+			<if test="param.roleCode != null">
+				and role_code = #{param.roleCode,jdbcType=VARCHAR}
+			</if>
+			<if test="param.sort != null">
+				and sort = #{param.sort,jdbcType=SMALLINT}
+			</if>
+			<if test="param.delFlag != null">
+				and del_flag = #{param.delFlag,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+			limit #{first,jdbcType=INTEGER},#{pageSize ,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="queryList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.org.system.model.manager.Role">
+		SELECT
+		id, name, role_code, sort, del_flag,description
+		FROM role
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+	
 </mapper>

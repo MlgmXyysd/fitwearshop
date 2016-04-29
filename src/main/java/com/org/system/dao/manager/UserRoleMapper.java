@@ -2,6 +2,8 @@ package com.org.system.dao.manager;
 
 import java.util.List;
 
+import com.org.system.model.manager.Page;
+import com.org.system.model.manager.Role;
 import com.org.system.model.manager.UserRole;
 
 /**
@@ -39,5 +41,26 @@ public interface UserRoleMapper {
 	 * @return 结果集合
 	 */
 	public List<Integer> findRoleIds(Integer userId);
+	
+	
+	/**
+	 * 依据用户ID删除用户角色关系
+	 * @param userId
+	 * @return
+	 */
+	int deleteByUserId(Integer userId);
+	
+	/**
+	 * 依据角色ID删除用户角色关系
+	 * @param userId
+	 * @return
+	 */
+	int deleteByRoleId(Integer roleId);
+	
+	public long queryPageCount(UserRole record);
+
+	public List<UserRole> queryPageList(Page<UserRole> page);
+
+	public List<UserRole> queryList(UserRole record);
 
 }

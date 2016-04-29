@@ -30,7 +30,6 @@ public class PermissionController extends BaseController{
 	@Autowired
 	private PermissionService permissionService;
 	
-	
 	/**
 	 * 默认页面
 	 */
@@ -51,7 +50,7 @@ public class PermissionController extends BaseController{
 	 * 菜单集合(JSON)
 	 */
 	@RequiresPermissions("sys:perm:menu:view")
-	@RequestMapping(value="menu/json",method = RequestMethod.GET)
+	@RequestMapping(value="menu/list.json",method = RequestMethod.GET)
 	@ResponseBody
 	public List<Permission>  menuDate(){
 		List<Permission> permissionList=permissionService.getMenus();
@@ -62,7 +61,7 @@ public class PermissionController extends BaseController{
 	 * 权限集合(JSON)
 	 */
 	@RequiresPermissions("sys:perm:view")
-	@RequestMapping(value="json",method = RequestMethod.GET)
+	@RequestMapping(value="list.json",method = RequestMethod.GET)
 	@ResponseBody
 	public List<Permission> getData() {
 		List<Permission> permissionList=permissionService.getAll();
@@ -73,7 +72,7 @@ public class PermissionController extends BaseController{
 	 * 获取菜单下的操作
 	 */
 	@RequiresPermissions("sys:perm:view")
-	@RequestMapping("ope/json")
+	@RequestMapping("ope/list.json")
 	@ResponseBody
 	public Map<String, Object> menuOperationDate(Integer pid){
 		List<Permission> menuOperList=permissionService.getMenuOperation(pid);
@@ -86,7 +85,7 @@ public class PermissionController extends BaseController{
 	/**
 	 * 当前登录用户的权限集合
 	 */
-	@RequestMapping("i/json")
+	@RequestMapping("i.json")
 	@ResponseBody
 	public List<Permission> myPermissionDate() {
 		List<Permission> permissionList=permissionService.getPermissions(UserUtil.getCurrentUser().getId());
@@ -130,7 +129,7 @@ public class PermissionController extends BaseController{
 	@RequiresPermissions("sys:perm:add")
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseBody
-	public String create( Permission permission,Model model) {
+	public String create( @ModelAttribute Permission permission,Model model) {
 		permissionService.save(permission);
 		return "success";
 	}
@@ -183,9 +182,10 @@ public class PermissionController extends BaseController{
 	 * 删除权限
 	 */
 	@RequiresPermissions("sys:perm:delete")
-	@RequestMapping(value = "delete/{id}")
+	@RequestMapping(value = "delete/{id}/lag.html")
 	@ResponseBody
 	public String delete(@PathVariable("id") Integer id) {
+		
 		permissionService.delete(id);
 		return "success";
 	}

@@ -29,7 +29,7 @@
     	
     	<div id="tg_tb" style="padding:5px;height:auto">
 		    <div>
-		    <shiro:hasRole name="admin">
+		    <shiro:hasRole name="sys:role:permupd">
 		    	<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="save();">保存授权</a>
 		    	<span class="toolbar-item dialog-tool-separator"></span>
 		        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="back()">恢复</a>
@@ -50,7 +50,7 @@ var roleId;	//双击选中的role
 $(function(){   
 	dg=$('#dg').datagrid({    
 	method: "get",
-    url:'${ctx}/system/role/json', 
+    url:'${ctx}/system/role/list.json', 
     fit : true,
 	fitColumns : true,
 	border : false,
@@ -69,7 +69,10 @@ $(function(){
         {field:'description',title:'描述',sortable:true,width:100,tooltip: true},
         {field : 'action',title : '操作',
 			formatter : function(value, row, index) {
-				return '<a href="javascript:lookP('+row.id+')"><div class="icon-hamburg-lock" style="width:16px;height:16px" title="查看权限"></div></a>';
+				var str = '<shiro:hasRole name="sys:role:permview">';
+				    str = str + '<a href="javascript:lookP('+row.id+')"><div class="icon-hamburg-lock" style="width:16px;height:16px" title="查看权限"></div></a>';
+				    str = str + '</shiro:hasRole>';
+				return 
 			}
         }
     ]],
@@ -81,7 +84,7 @@ $(function(){
 	
 	permissionDg=$('#permissionDg').treegrid({   
 		method: "get",
-	    url:'${ctx}/system/permission/json', 
+	    url:'${ctx}/system/permission/list.json', 
 	    fit : true,
 		fitColumns : true,
 		border : false,
@@ -121,7 +124,7 @@ function lookP(roleId){
 	$.ajax({
 		async:false,
 		type:'get',
-		url:"${ctx}/system/role/"+roleId+"/json",
+		url:"${ctx}/system/role/"+roleId+"/role.json",
 		success: function(data){
 			if(typeof data=='object'){
 				rolePerData=data;

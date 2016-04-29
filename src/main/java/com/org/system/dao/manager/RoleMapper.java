@@ -1,6 +1,10 @@
 package com.org.system.dao.manager;
 
+import java.util.List;
+
+import com.org.system.model.manager.Page;
 import com.org.system.model.manager.Role;
+import com.org.system.model.manager.User;
 
 /**
  * 
@@ -23,4 +27,10 @@ public interface RoleMapper {
 	int updateByPrimaryKeyWithBLOBs(Role record);
 
 	int updateByPrimaryKey(Role record);
+
+	public long queryPageCount(Role record);
+
+	public List<Role> queryPageList(Page<Role> page);
+
+	public List<Role> queryList(Role record);
 }

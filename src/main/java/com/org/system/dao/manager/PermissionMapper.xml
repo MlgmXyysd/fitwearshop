@@ -186,7 +186,7 @@
 	
 	<select id="getMenus" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
 		 SELECT
-		 p.id,	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
+		 DISTINCT(p.id),	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
 		 FROM permission p
 		 INNER JOIN role_permission rp on p.ID=rp.PERMISSION_ID
 		 INNER JOIN role r ON  r.id=rp.ROLE_ID
@@ -205,5 +205,90 @@
 		 FROM permission p
 		 where p.TYPE='O' and p.PID=#{id} order by p.SORT
 	</select>
+	
+	
+	<sql id="modelwheresql">
+		<where>
+			<if test="pid != null">
+				and pid = #{pid,jdbcType=INTEGER}
+			</if>
+			<if test="name != null">
+				and name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				and type = #{type,jdbcType=VARCHAR}
+			</if>
+			<if test="sort != null">
+				and sort = #{sort,jdbcType=INTEGER}
+			</if>
+			<if test="url != null">
+				and url = #{url,jdbcType=VARCHAR}
+			</if>
+			<if test="permCode != null">
+				and perm_code = #{permCode,jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null">
+				and icon = #{icon,jdbcType=VARCHAR}
+			</if>
+			<if test="state != null">
+				and state = #{state,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.system.model.manager.Permission">
+		SELECT
+		count(1)
+		FROM permission
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+	
+	<select id="queryPageList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		id, pid, name, type, sort, url, perm_code, icon, state,description
+		FROM permission
+		WHERE 1=1
+		<if test="param != null">
+			<if test="param.pid != null">
+				and pid = #{param.pid,jdbcType=INTEGER}
+			</if>
+			<if test="param.name != null">
+				and name = #{param.name,jdbcType=VARCHAR}
+			</if>
+			<if test="param.type != null">
+				and type = #{param.type,jdbcType=VARCHAR}
+			</if>
+			<if test="param.sort != null">
+				and sort = #{param.sort,jdbcType=INTEGER}
+			</if>
+			<if test="param.url != null">
+				and url = #{param.url,jdbcType=VARCHAR}
+			</if>
+			<if test="param.permCode != null">
+				and perm_code = #{param.permCode,jdbcType=VARCHAR}
+			</if>
+			<if test="param.icon != null">
+				and icon = #{param.icon,jdbcType=VARCHAR}
+			</if>
+			<if test="param.state != null">
+				and state = #{param.state,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+			limit #{first,jdbcType=INTEGER},#{pageSize ,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="queryList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.org.system.model.manager.Permission">
+		SELECT
+		id, pid, name, type, sort, url, perm_code, icon, state,description
+		FROM permission
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+	
 
 </mapper>

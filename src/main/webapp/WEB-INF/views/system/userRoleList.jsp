@@ -11,7 +11,7 @@
 	var ur_dg;
 	ur_dg=$('#ur_dg').datagrid({    
 	method: "get",
-	url:'${ctx}/system/role/json', 
+	url:'${ctx}/system/role/list.json', 
     fit : true,
 	fitColumns : true,
 	border : false,
@@ -34,7 +34,7 @@
     	$.ajax({
     		async:false,
 			type:'get',
-			url:"${ctx}/system/user/${userId}/role",
+			url:"${ctx}/system/user/${userId}/role.json",
 			success: function(data){
 				if(data){
 					for(var i=0,j=data.length;i<j;i++){
@@ -60,7 +60,7 @@ function saveUserRole(){
 		type:'POST',
 		data:JSON.stringify(newRoleList),
 		contentType:'application/json;charset=utf-8',	//必须
-		url:"${ctx}/system/user/${userId}/updateRole",
+		url:"${ctx}/system/user/${userId}/updateRole.json",
 		success: function(data){
 			if(data=='success'){
 				parent.$.messager.show({ title : "提示",msg: "操作成功！", position: "bottomRight" });

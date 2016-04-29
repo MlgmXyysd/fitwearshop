@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "system/index")
 public class LoginController{
 	
+	
+	
 	/**
 	 * 默认页面
 	 * @return
@@ -24,7 +26,7 @@ public class LoginController{
 	public String login() {
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated()||subject.isRemembered()){
-			return "redirect:"+"system/index.html";
+			return "redirect:"+"index";
 		} 
 		return "system/login";
 	}

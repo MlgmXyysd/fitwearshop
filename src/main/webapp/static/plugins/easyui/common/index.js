@@ -77,7 +77,7 @@
             $.easyui.messager.confirm("操作提醒", "您确定要退出当前程序并关闭该网页？", function (c) {
                 if (c) {
                     window.onbeforeunload = null;
-                    location.href='a/logout';
+                    location.href='system/index/logout';
                 }
             });
         });

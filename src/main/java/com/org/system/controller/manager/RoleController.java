@@ -54,12 +54,11 @@ public class RoleController extends BaseController{
 	 * 角色集合(JSON)
 	 */
 	@RequiresPermissions("sys:role:view")
-	@RequestMapping(value="json",method = RequestMethod.GET)
+	@RequestMapping(value="list.json",method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getData(HttpServletRequest request) {
+	public Map<String, Object> getData(HttpServletRequest request,Role role) {
 		Page<Role> page=getPage(request);
-//		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(request);
-//		page = roleService.search(page, filters);
+		page = roleService.search(page, role);
 		return getEasyUIData(page);
 	}
 	
@@ -69,7 +68,7 @@ public class RoleController extends BaseController{
 	 * @return
 	 */
 	@RequiresPermissions("sys:role:permView")
-	@RequestMapping("{id}/json")
+	@RequestMapping("{id}/role.json")
 	@ResponseBody
 	public List<Integer> getRolePermissions(@PathVariable("id") Integer id){
 		List<Integer> permissionIdList=rolePermissionService.getPermissionIds(id);
@@ -134,7 +133,7 @@ public class RoleController extends BaseController{
 	@RequiresPermissions("sys:role:add")
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseBody
-	public String create( Role role,Model model) {
+	public String create(@ModelAttribute Role role,Model model) {
 		roleService.save(role);
 		return "success";
 	}
@@ -163,7 +162,7 @@ public class RoleController extends BaseController{
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
 	public String update(@ModelAttribute("role") Role role,Model model) {
-		roleService.save(role);
+		roleService.update(role);
 		return "success";
 	}
 

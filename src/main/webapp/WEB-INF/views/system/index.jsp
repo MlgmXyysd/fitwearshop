@@ -23,7 +23,7 @@
         <div id="northPanel" data-options="region: 'north', border: false" style="height: 80px; overflow: hidden;">
             <div id="topbar" class="top-bar">
                 <div class="top-bar-left">
-                    <h1 style="margin-left: 10px; margin-top: 10px;color: #fff">数字<span style="color: #3F4752">后台管理系统</span></h1>
+                    <h1 style="margin-left: 10px; margin-top: 10px;color: #fff">FitWear Shop<span style="color: #3F4752">管理系统</span></h1>
                 </div>
                 <div class="top-bar-right">
                     <div id="timerSpan"></div>
@@ -123,7 +123,7 @@
 $.ajax({
 	async:false,
 	type:'get',
-	url:"${ctx}/system/permission/i/json",
+	url:"${ctx}/system/permission/i.json",
 	success: function(data){
 		var menuData={data:data};
 		var html = template('menu', menuData);

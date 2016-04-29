@@ -70,5 +70,5 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- 静态资源 -->
 	<mvc:resources mapping="/static/**" location="/static/" cache-period="31556926" />
 	<!-- 定义无需Controller的url<->view直接映射 -->
-	<!-- <mvc:view-controller path="/a" view-name="/system/index"/> -->
+	<mvc:view-controller path="/index" view-name="system/index"/>
 </beans>  

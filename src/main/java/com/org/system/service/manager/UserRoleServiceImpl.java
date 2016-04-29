@@ -39,19 +39,25 @@ public class UserRoleServiceImpl implements UserRoleService {
 
 	public List<UserRole> getAll() {
 
-		return null;
+		return userRoleMapper.queryList(null);
 	}
 
 	public List<UserRole> search(UserRole entity) {
-		return null;
+		return userRoleMapper.queryList(entity);
 	}
 
 	public Page<UserRole> search(Page<UserRole> page, UserRole entity) {
-		List<UserRole> list = null;
-		Integer count = null;
-		return null;
+		Page<UserRole> p = new Page<UserRole>();
+		Long count = userRoleMapper.queryPageCount(entity);
+		List<UserRole> list =userRoleMapper.queryPageList(page);
+		p.setTotalCount(count);
+		p.setResult(list);
+		return p;
 	}
 
+	
+	
+	
 	public List<Integer> getRoleIdList(Integer userId) {
 		return userRoleMapper.findRoleIds(userId);
 	}

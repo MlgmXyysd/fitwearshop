@@ -16,7 +16,8 @@
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
 		<result column="state" property="state" jdbcType="CHAR" />
 		<result column="login_count" property="loginCount" jdbcType="INTEGER" />
-		<result column="previous_visit" property="previousVisit" jdbcType="TIMESTAMP" />
+		<result column="previous_visit" property="previousVisit"
+			jdbcType="TIMESTAMP" />
 		<result column="last_visit" property="lastVisit" jdbcType="TIMESTAMP" />
 		<result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 	</resultMap>
@@ -25,9 +26,11 @@
 		<result column="description" property="description" jdbcType="LONGVARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, login_name, name, password, salt, birthday, gender, email, phone,
+		id, login_name, name, password, salt, birthday, gender,
+		email, phone,
 		icon, create_date,
-		state, login_count, previous_visit, last_visit, del_flag
+		state, login_count, previous_visit,
+		last_visit, del_flag
 	</sql>
 	<sql id="Blob_Column_List">
 		description
@@ -46,19 +49,27 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.org.system.model.manager.User">
-		insert into user (id, login_name, name,
+		insert into user (id,
+		login_name, name,
 		password, salt, birthday,
 		gender, email, phone,
-		icon, create_date, state,
+		icon,
+		create_date, state,
 		login_count, previous_visit, last_visit,
-		del_flag, description)
-		values (#{id,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR},
+		del_flag,
+		description)
+		values (#{id,jdbcType=INTEGER},
+		#{loginName,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
-		#{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
-		#{gender,jdbcType=SMALLINT}, #{email,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR},
+		#{birthday,jdbcType=TIMESTAMP},
+		#{gender,jdbcType=SMALLINT},
+		#{email,jdbcType=VARCHAR},
 		#{phone,jdbcType=VARCHAR},
-		#{icon,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=CHAR},
-		#{loginCount,jdbcType=INTEGER}, #{previousVisit,jdbcType=TIMESTAMP},
+		#{icon,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{state,jdbcType=CHAR},
+		#{loginCount,jdbcType=INTEGER},
+		#{previousVisit,jdbcType=TIMESTAMP},
 		#{lastVisit,jdbcType=TIMESTAMP},
 		#{delFlag,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
 	</insert>
@@ -226,53 +237,178 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.org.system.model.manager.User">
-		update user
+		update
+		user
 		set login_name = #{loginName,jdbcType=VARCHAR},
-		name = #{name,jdbcType=VARCHAR},
+		name =
+		#{name,jdbcType=VARCHAR},
 		password = #{password,jdbcType=VARCHAR},
-		salt = #{salt,jdbcType=VARCHAR},
+		salt
+		= #{salt,jdbcType=VARCHAR},
 		birthday = #{birthday,jdbcType=TIMESTAMP},
 		gender = #{gender,jdbcType=SMALLINT},
-		email = #{email,jdbcType=VARCHAR},
+		email =
+		#{email,jdbcType=VARCHAR},
 		phone = #{phone,jdbcType=VARCHAR},
-		icon = #{icon,jdbcType=VARCHAR},
-		create_date = #{createDate,jdbcType=TIMESTAMP},
+		icon =
+		#{icon,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP},
 		state = #{state,jdbcType=CHAR},
 		login_count = #{loginCount,jdbcType=INTEGER},
-		previous_visit = #{previousVisit,jdbcType=TIMESTAMP},
-		last_visit = #{lastVisit,jdbcType=TIMESTAMP},
-		del_flag = #{delFlag,jdbcType=VARCHAR},
-		description = #{description,jdbcType=LONGVARCHAR}
+		previous_visit =
+		#{previousVisit,jdbcType=TIMESTAMP},
+		last_visit =
+		#{lastVisit,jdbcType=TIMESTAMP},
+		del_flag =
+		#{delFlag,jdbcType=VARCHAR},
+		description =
+		#{description,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.User">
 		update user
-		set login_name = #{loginName,jdbcType=VARCHAR},
-		name = #{name,jdbcType=VARCHAR},
+		set
+		login_name = #{loginName,jdbcType=VARCHAR},
+		name =
+		#{name,jdbcType=VARCHAR},
 		password = #{password,jdbcType=VARCHAR},
-		salt = #{salt,jdbcType=VARCHAR},
+		salt
+		= #{salt,jdbcType=VARCHAR},
 		birthday = #{birthday,jdbcType=TIMESTAMP},
 		gender = #{gender,jdbcType=SMALLINT},
-		email = #{email,jdbcType=VARCHAR},
+		email =
+		#{email,jdbcType=VARCHAR},
 		phone = #{phone,jdbcType=VARCHAR},
-		icon = #{icon,jdbcType=VARCHAR},
-		create_date = #{createDate,jdbcType=TIMESTAMP},
+		icon =
+		#{icon,jdbcType=VARCHAR},
+		create_date =
+		#{createDate,jdbcType=TIMESTAMP},
 		state = #{state,jdbcType=CHAR},
 		login_count = #{loginCount,jdbcType=INTEGER},
-		previous_visit = #{previousVisit,jdbcType=TIMESTAMP},
-		last_visit = #{lastVisit,jdbcType=TIMESTAMP},
+		previous_visit =
+		#{previousVisit,jdbcType=TIMESTAMP},
+		last_visit =
+		#{lastVisit,jdbcType=TIMESTAMP},
 		del_flag = #{delFlag,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByUserName" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+	<select id="selectByUserName" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
 		SELECT
-		id, login_name, name, password, salt, birthday, gender, email, phone,
-		icon, create_date, state, description, login_count, previous_visit,
+		id, login_name, name, password, salt, birthday,
+		gender, email, phone,
+		icon, create_date, state, description,
+		login_count, previous_visit,
 		last_visit, del_flag
 		FROM user
-		WHERE login_name = #{loginName,jdbcType=VARCHAR}
+		WHERE
+		login_name = #{loginName,jdbcType=VARCHAR}
+	</select>
+
+	 <sql id="modelwheresql">
+		<where>
+			<if test="loginName != null">
+				and login_name = #{loginName,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				and name = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				and password = #{password,jdbcType=VARCHAR}
+			</if>
+			<if test="salt != null">
+				and salt = #{salt,jdbcType=VARCHAR}
+			</if>
+			<if test="birthday != null">
+				and birthday = #{birthday,jdbcType=TIMESTAMP}
+			</if>
+			<if test="gender != null">
+				and gender = #{gender,jdbcType=SMALLINT}
+			</if>
+			<if test="email != null">
+				and email = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="phone != null">
+				and phone = #{phone,jdbcType=VARCHAR}
+			</if>
+			<if test="icon != null">
+				and icon = #{icon,jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				and create_date = #{createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="state != null">
+				and state = #{state,jdbcType=CHAR}
+			</if>
+			<if test="loginCount != null">
+				and login_count = #{loginCount,jdbcType=INTEGER}
+			</if>
+			<if test="previousVisit != null">
+				and previous_visit = #{previousVisit,jdbcType=TIMESTAMP}
+			</if>
+			<if test="lastVisit != null">
+				and last_visit = #{lastVisit,jdbcType=TIMESTAMP}
+			</if>
+			<if test="delFlag != null">
+				and del_flag = #{delFlag,jdbcType=VARCHAR}
+			</if>
+			<if test="description != null">
+				and description = #{description,jdbcType=LONGVARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.system.model.manager.User">
+		SELECT
+		count(1)
+		FROM user
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+	
+	<select id="queryPageList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		id, login_name, name, password, salt, birthday,
+		gender, email, phone,
+		icon, create_date, state, description,
+		login_count, previous_visit,
+		last_visit, del_flag
+		FROM user
+		WHERE 1=1
+		<if test="param != null">
+			<if test="param.name != null">
+				and name like CONCAT('%',#{param.name,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="param.phone != null">
+				and phone = #{param.phone,jdbcType=VARCHAR}
+			</if>
+			<if test="param.createDate != null">
+				and create_date &gt;= #{param.createDateBg,jdbcType=TIMESTAMP}
+			</if>
+			<if test="param.createDate != null">
+				and create_date &lt;= #{param.createDateEg,jdbcType=TIMESTAMP}
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+				limit #{first,jdbcType=INTEGER},#{pageSize ,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="queryList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.org.system.model.manager.User">
+		SELECT
+		id, login_name, name, password, salt, birthday,
+		gender, email, phone,
+		icon, create_date, state, description,
+		login_count, previous_visit,
+		last_visit, del_flag
+		FROM user
+		WHERE 1=1
+		<include refid="modelwheresql" />
 	</select>
 
 </mapper>

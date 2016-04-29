@@ -12,10 +12,8 @@
 <script src="${ctx}/static/plugins/easyui/jquery-easyui-1.3.6/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/plugins/easyui/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 
-<!-- jquery扩展 -->
 <script src="${ctx}/static/plugins/easyui/release/jquery.jdirk.min.js"></script>
 
-<!-- easyui扩展 -->
 <link href="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.css" rel="stylesheet" type="text/css" />
 
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.js" type="text/javascript"></script>
@@ -39,10 +37,7 @@
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.tabs.js" type="text/javascript"></script>
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.theme.js" type="text/javascript"></script>
 
-<!--<script src="${ctx}/static/plugins/easyui/release/jeasyui.extensions.all.min.js"></script>-->
-
 <script src="${ctx}/static/plugins/easyui/icons/jeasyui.icons.all.js" type="text/javascript"></script>
-<!--<script src="${ctx}/static/plugins/easyui/release/jeasyui.icons.all.min.js"></script>-->
     
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.icons.js" type="text/javascript"></script>
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.gridselector.js" type="text/javascript"></script>
@@ -57,14 +52,11 @@
 <link rel="stylesheet" href="${ctx }/static/plugins/easyui/common/other.css"></link>
 
 <script>
-//全局的AJAX访问，处理AJAX清求时SESSION超时
 $.ajaxSetup({
     contentType:"application/x-www-form-urlencoded;charset=utf-8",
     complete:function(XMLHttpRequest,textStatus){
-          //通过XMLHttpRequest取得响应头，sessionstatus           
           var sessionstatus=XMLHttpRequest.getResponseHeader("sessionstatus"); 
           if(sessionstatus=="timeout"){
-               //跳转的登录页面
                window.location.replace('${ctx}/a/login');
        		}	
     }

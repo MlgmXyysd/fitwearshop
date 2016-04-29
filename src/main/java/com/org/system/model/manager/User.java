@@ -44,6 +44,12 @@ public class User {
 	
 	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
 	
+	private Date createDateBg;
+	
+	private Date createDateEg;
+	
+	
+	private String confirmPassword;
 
 	public Set<UserRole> getUserRoles() {
 		return userRoles;
@@ -196,6 +202,31 @@ public class User {
 
 	public void setPlainPassword(String plainPassword) {
 		this.plainPassword = plainPassword;
+	}
+	
+	public Date getCreateDateBg() {
+		return createDateBg;
+	}
+
+	public void setCreateDateBg(Date createDateBg) {
+		this.createDateBg = createDateBg;
+	}
+
+	public Date getCreateDateEg() {
+		return createDateEg;
+	}
+
+	public void setCreateDateEg(Date createDateEg) {
+		this.createDateEg = createDateEg;
+	}
+
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	/** default constructor */

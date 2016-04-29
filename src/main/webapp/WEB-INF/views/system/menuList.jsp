@@ -34,7 +34,7 @@ var parentPermId;
 $(function(){   
 	dg=$('#dg').treegrid({  
 	method: "get",
-    url:'${ctx}/system/permission/menu/json', 
+    url:'${ctx}/system/permission/menu/list.json', 
     fit : true,
 	fitColumns : true,
 	border : false,
@@ -102,7 +102,7 @@ function del(){
 		if (data){
 			$.ajax({
 				type:'get',
-				url:"${ctx}/system/permission/delete/"+row.id,
+				url:"${ctx}/system/permission/delete/"+row.id+"/lag.html",
 				success: function(data){
 					if(successTip(data,dg))
 			    		dg.treegrid('reload');

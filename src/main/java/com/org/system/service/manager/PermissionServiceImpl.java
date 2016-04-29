@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.org.system.dao.manager.PermissionMapper;
+import com.org.system.dao.manager.RolePermissionMapper;
 import com.org.system.model.manager.Page;
 import com.org.system.model.manager.Permission;
 
@@ -15,6 +16,9 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Autowired
 	private PermissionMapper permissionMapper;
+	
+	@Autowired
+	private RolePermissionMapper rolePermissionMapper;
 	
 	public void addBaseOpe(Integer pid, String pClassName) {
 		List<Permission> pList=new ArrayList<Permission>();
@@ -79,26 +83,26 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	public void delete(Permission entity) {
-
-//		permissionMapper.
+		
 	}
 
 	public void delete(Integer id) {
+		rolePermissionMapper.deleteBypermissionId(id);
 		permissionMapper.deleteByPrimaryKey(id);
 	}
 
 	public List<Permission> getAll() {
-		return null;
+		return permissionMapper.queryList(null);
 	}
 
 	public List<Permission> search(Permission entity) {
-		return null;
+		return permissionMapper.queryList(entity);
 	}
 
 	public Page<Permission> search(Page<Permission> page, Permission entity) {
 		Page<Permission> p = new Page<Permission>();
-		Integer count = null;
-		List<Permission> list =null;
+		Long count = permissionMapper.queryPageCount(entity);
+		List<Permission> list =permissionMapper.queryPageList(page);
 		p.setTotalCount(count);
 		p.setResult(list);
 		return p;

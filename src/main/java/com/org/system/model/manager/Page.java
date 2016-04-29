@@ -27,14 +27,18 @@ public class Page<T> {
 
 	//-- 分页参数 --//
 	protected int pageNo = 1;
-	protected int pageSize = -1;
+	protected int pageSize = 20;
 	protected String orderBy = null;
 	protected String order = null;
 	protected boolean autoCount = true;
-
+	protected int first = 1;
 	//-- 返回结果 --//
 	protected List<T> result = Lists.newArrayList();
+	
+	// 返回zong shu
 	protected long totalCount = -1;
+	
+	protected T param;
 
 	//-- 构造函数 --//
 	public Page() {
@@ -49,6 +53,17 @@ public class Page<T> {
 		this.pageSize=pageSize;
 		this.orderBy=orderBy;
 		this.order=order;
+		this.first=((pageNo - 1) * pageSize) ;
+		
+	}
+	
+	public Page(int pageNo,int pageSize,String orderBy,String order,T obj){
+		this.pageNo=pageNo;
+		this.pageSize=pageSize;
+		this.orderBy=orderBy;
+		this.order=order;
+		this.param=obj;
+		this.first=((pageNo - 1) * pageSize);
 	}
 
 	//-- 分页参数访问函数 --//
@@ -58,6 +73,8 @@ public class Page<T> {
 	public int getPageNo() {
 		return pageNo;
 	}
+	
+	
 
 	/**
 	 * 设置当前页的页号,序号从1开始,低于1时自动调整为1.
@@ -104,7 +121,13 @@ public class Page<T> {
 	 * 根据pageNo和pageSize计算当前页第一条记录在总结果集中的位置,序号从1开始.
 	 */
 	public int getFirst() {
-		return ((pageNo - 1) * pageSize) + 1;
+		return this.first;
+	}
+	
+	
+
+	public void setFirst(int first) {
+		this.first = first;
 	}
 
 	/**
@@ -275,5 +298,14 @@ public class Page<T> {
 			return pageNo;
 		}
 	}
+
+	public T getParam() {
+		return param;
+	}
+
+	public void setParam(T param) {
+		this.param = param;
+	}
+
 	
 }

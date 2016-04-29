@@ -2,7 +2,10 @@ package com.org.system.dao.manager;
 
 import java.util.List;
 
+import com.org.system.model.manager.Page;
+import com.org.system.model.manager.Role;
 import com.org.system.model.manager.RolePermission;
+import com.org.system.model.manager.User;
 
 /**
  * 
@@ -24,9 +27,10 @@ public interface RolePermissionMapper {
 
     int updateByPrimaryKey(RolePermission record);
 	
+	int deleteByRoleId(Integer roleId);
 	
+	int deleteBypermissionId(Integer permissionId);
 	
-
 	/**
 	 * 查询角色拥有的权限id
 	 * 
@@ -41,6 +45,13 @@ public interface RolePermissionMapper {
 	 * @param permissionId
 	 */
 	public void deleteRP(Integer roleId,Integer permissionId);
+	
+	
+	public long queryPageCount(RolePermission record);
+
+	public List<RolePermission> queryPageList(Page<RolePermission> page);
+
+	public List<RolePermission> queryList(RolePermission record);
 	
 	
 	

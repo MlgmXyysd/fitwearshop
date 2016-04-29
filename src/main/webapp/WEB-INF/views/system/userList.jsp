@@ -10,10 +10,10 @@
 <div id="tb" style="padding:5px;height:auto">
         <div>
         	<form id="searchFrom" action="">
-       	        <input type="text" name="filter_LIKES_name" class="easyui-validatebox" data-options="width:150,prompt: '昵称'"/>
-       	        <input type="text" name="filter_LIKES_phone" class="easyui-validatebox" data-options="width:150,prompt: '电话'"/>
-		        <input type="text" name="filter_GTD_createDate" class="easyui-my97" datefmt="yyyy-MM-dd" data-options="width:150,prompt: '开始日期'"/>
-		        - <input type="text" name="filter_LTD_createDate" class="easyui-my97" datefmt="yyyy-MM-dd" data-options="width:150,prompt: '结束日期'"/>
+       	        <input type="text" name="name" class="easyui-validatebox" data-options="width:150,prompt: '昵称'"/>
+       	        <input type="text" name="phone" class="easyui-validatebox" data-options="width:150,prompt: '电话'"/>
+		        <input type="text" name="createDateBg" class="easyui-my97" datefmt="yyyy-MM-dd" data-options="width:150,prompt: '开始日期'"/>
+		        - <input type="text" name="createDateEg" class="easyui-my97" datefmt="yyyy-MM-dd" data-options="width:150,prompt: '结束日期'"/>
 		        <span class="toolbar-item dialog-tool-separator"></span>
 		        <a href="javascript(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="cx()">查询</a>
 			</form>
@@ -44,7 +44,7 @@ var d;
 $(function(){   
 	dg=$('#dg').datagrid({    
 	method: "get",
-    url:'${ctx}/system/user/json', 
+    url:'${ctx}/system/user/list.json', 
     fit : true,
 	fitColumns : true,
 	border : false,
@@ -118,7 +118,7 @@ function del(){
 		if (data){
 			$.ajax({
 				type:'get',
-				url:"${ctx}/system/user/delete/"+row.id,
+				url:"${ctx}/system/user/delete/"+row.id+"/lag.html",
 				success: function(data){
 					successTip(data,dg);
 				}

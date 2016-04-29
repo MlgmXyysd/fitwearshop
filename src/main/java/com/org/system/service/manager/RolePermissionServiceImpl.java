@@ -78,17 +78,20 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
 	public List<RolePermission> getAll() {
 
-		return null;
+		return rolePermissionMapper.queryList(null);
 	}
 
 	public List<RolePermission> search(RolePermission entity) {
-		return null;
+		return rolePermissionMapper.queryList(entity);
 	}
 
 	public Page<RolePermission> search(Page<RolePermission> page, RolePermission entity) {
-		Integer count = null;
-		List<RolePermission> list = null;
-		return null;
+		Page<RolePermission> p = new Page<RolePermission>();
+		Long count = rolePermissionMapper.queryPageCount(entity);
+		List<RolePermission> list =rolePermissionMapper.queryPageList(page);
+		p.setTotalCount(count);
+		p.setResult(list);
+		return p;
 	}
 
 }
