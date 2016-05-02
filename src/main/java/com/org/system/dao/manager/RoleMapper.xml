@@ -183,4 +183,12 @@
 		<include refid="modelwheresql" />
 	</select>
 	
+	<select id="queryRolesByUserId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		SELECT
+		DISTINCT(r.id), r.name, r.role_code, r.sort, r.del_flag,r.description
+		FROM user_role ur
+		LEFT JOIN  role r on r.id = ur.role_id
+		WHERE ur.user_id = #{userId,jdbcType=INTEGER}
+	</select>
+	
 </mapper>

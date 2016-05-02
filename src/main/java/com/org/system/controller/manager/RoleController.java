@@ -89,22 +89,23 @@ public class RoleController extends BaseController{
 		
 		//获取application中的sessions
 		@SuppressWarnings("rawtypes")
-		HashSet sessions=(HashSet) session.getServletContext().getAttribute("sessions");
-		@SuppressWarnings("unchecked")
-		Iterator<Session> iterator= sessions.iterator();
-		PrincipalCollection pc=null;
-		//遍历sessions
-		while(iterator.hasNext()){
-			HttpSession s=(HttpSession) iterator.next();
-			User user=(User) s.getAttribute("user");
+//		HashSet sessions=(HashSet) session.getServletContext().getAttribute("sessions");
+//		@SuppressWarnings("unchecked")
+//		Iterator<Session> iterator= sessions.iterator();
+//		PrincipalCollection pc=null;
+//		//遍历sessions
+//		while(iterator.hasNext()){
+			//HttpSession s=(HttpSession) iterator.next();
+			
+		//User user=(User) s.getAttribute("user");
+			User user=(User) session.getAttribute("user");
 			if(user.getId().intValue()==id.intValue()){
-				pc= (PrincipalCollection) s.getAttribute(String.valueOf(id));
+				PrincipalCollection pc= (PrincipalCollection) session.getAttribute(String.valueOf(id));
 				//清空该用户权限缓存
 				rolePermissionService.clearUserPermCache(pc);
-				s.removeAttribute(String.valueOf(id));
-				break;
+				session.removeAttribute(String.valueOf(id));
 			}
-		}
+//		}
 		
 		rolePermissionService.updateRolePermission(id,oldRoleIdList ,newRoleIdList);
 		

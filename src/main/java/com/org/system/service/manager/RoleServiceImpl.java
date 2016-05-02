@@ -61,5 +61,9 @@ public class RoleServiceImpl implements RoleService {
 		p.setResult(list);
 		return p;
 	}
+	
+	public List<Role> queryRolesByUserId(Integer userId){
+		return roleMapper.queryRolesByUserId(userId);
+	}
 
 }

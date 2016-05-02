@@ -29,11 +29,11 @@
     	
     	<div id="tg_tb" style="padding:5px;height:auto">
 		    <div>
-		    <shiro:hasRole name="sys:role:permupd">
+		    <%-- <shiro:hasRole name="sys:role:permupd"> --%>
 		    	<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="save();">保存授权</a>
 		    	<span class="toolbar-item dialog-tool-separator"></span>
 		        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="back()">恢复</a>
-		    </shiro:hasRole>
+		    <%-- </shiro:hasRole> --%>
 		    </div>
 		</div>
 		
@@ -69,10 +69,10 @@ $(function(){
         {field:'description',title:'描述',sortable:true,width:100,tooltip: true},
         {field : 'action',title : '操作',
 			formatter : function(value, row, index) {
-				var str = '<shiro:hasRole name="sys:role:permview">';
+				/* var str = '<shiro:hasRole name="sys:role:permview">';
 				    str = str + '<a href="javascript:lookP('+row.id+')"><div class="icon-hamburg-lock" style="width:16px;height:16px" title="查看权限"></div></a>';
-				    str = str + '</shiro:hasRole>';
-				return 
+				    str = str + '</shiro:hasRole>'; */
+				return '<a href="javascript:lookP('+row.id+')"><div class="icon-hamburg-lock" style="width:16px;height:16px" title="查看权限"></div></a>';
 			}
         }
     ]],

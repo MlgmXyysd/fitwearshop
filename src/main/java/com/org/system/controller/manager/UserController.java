@@ -163,7 +163,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("sys:user:roleUpd")
-	@RequestMapping(value = "{id}/updateRole.json")
+	@RequestMapping(value = "{id}/updateRole.html")
 	@ResponseBody
 	public String updateUserRole(@PathVariable("id") Integer id,@RequestBody List<Integer> newRoleList) {
 		userRoleService.updateUserRole(id, userRoleService.getRoleIdList(id),newRoleList);

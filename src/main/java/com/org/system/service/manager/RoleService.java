@@ -26,4 +26,6 @@ public interface RoleService {
 	public List<Role> search( Role entity);
 	
 	public Page<Role> search( Page<Role> page, Role entity) ;
+	
+	public List<Role> queryRolesByUserId(Integer userId);
 }

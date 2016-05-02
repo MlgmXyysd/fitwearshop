@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import com.google.common.base.Objects;
 import com.org.system.model.manager.Permission;
+import com.org.system.model.manager.Role;
 import com.org.system.model.manager.User;
 import com.org.system.model.manager.UserRole;
 import com.org.utils.CaptchaException;
@@ -38,6 +39,9 @@ public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
 	private PermissionService permissionService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	/**
 	 * 认证回调函数,登录时调用.
@@ -47,7 +51,6 @@ public class UserRealm extends AuthorizingRealm {
 			throws AuthenticationException {
 		UsernamePasswordCaptchaToken token = (UsernamePasswordCaptchaToken) authcToken;
 		User user = userService.getUser(token.getUsername());
-
 		if (user != null && doCaptchaValidate(token)) {
 			byte[] salt = Encodes.decodeHex(user.getSalt());
 			ShiroUser shiroUser = new ShiroUser(user.getId(), user.getLoginName(), user.getName());
@@ -73,9 +76,14 @@ public class UserRealm extends AuthorizingRealm {
 				SecurityUtils.getSubject().getPrincipals());
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		
 		// 赋予角色
-		for (UserRole userRole : user.getUserRoles()) {
-			info.addRole(userRole.getRole().getName());
+		
+//		for (UserRole userRole : user.getUserRoles()) {
+//			info.addRole(userRole.getRole().getName());
+//		}
+		for (Role role : roleService.queryRolesByUserId(user.getId())) {
+			info.addRole(role.getName());
 		}
 		// 赋予权限
 		for (Permission permission : permissionService.getPermissions(user.getId())) {
@@ -85,6 +93,7 @@ public class UserRealm extends AuthorizingRealm {
 
 		// 设置登录次数、时间
 		userService.updateUserLogin(user);
+		
 		return info;
 	}
 

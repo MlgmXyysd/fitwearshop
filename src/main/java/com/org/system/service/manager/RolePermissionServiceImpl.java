@@ -35,7 +35,10 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 		// 是否添加
 		for (int i = 0, j = newList.size(); i < j; i++) {
 			if (!oldList.contains(newList.get(i))) {
-				rolePermissionMapper.insert(getRolePermission(id, newList.get(i)));
+				RolePermission rp=new RolePermission();
+				rp.setRoleId(id);
+				rp.setPermissionId(newList.get(i));
+				rolePermissionMapper.insert(rp);
 			}
 		}
 

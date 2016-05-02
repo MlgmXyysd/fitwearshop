@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.org.system.model.manager.Permission;
 import com.org.system.service.manager.PermissionService;
 import com.org.utils.UserUtil;
@@ -85,11 +86,15 @@ public class PermissionController extends BaseController{
 	/**
 	 * 当前登录用户的权限集合
 	 */
+	@RequiresPermissions("sys:perm:view")
 	@RequestMapping("i.json")
 	@ResponseBody
-	public List<Permission> myPermissionDate() {
+	public String  myPermissionDate() {
+		if(UserUtil.getCurrentUser()== null){
+			return "redirect:"+"/system/index/login";
+		}
 		List<Permission> permissionList=permissionService.getPermissions(UserUtil.getCurrentUser().getId());
-		return permissionList;
+		return JSON.toJSONString(permissionList);
 	}
 	
 	/**

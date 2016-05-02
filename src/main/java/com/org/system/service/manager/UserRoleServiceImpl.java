@@ -73,7 +73,10 @@ public class UserRoleServiceImpl implements UserRoleService {
 		// 是否添加
 		for (int m = 0, n = roleIdsNew.size(); m < n; m++) {
 			if (!roleIdsOld.contains(roleIdsNew.get(m))) {
-				userRoleMapper.insert(getUserRole(userId, roleIdsNew.get(m)));
+				UserRole ur = new UserRole();
+				ur.setUserId(userId);
+				ur.setRoleId(roleIdsNew.get(m));
+				userRoleMapper.insert(ur);
 			}
 		}
 	}

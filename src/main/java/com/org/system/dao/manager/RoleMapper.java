@@ -33,4 +33,6 @@ public interface RoleMapper {
 	public List<Role> queryPageList(Page<Role> page);
 
 	public List<Role> queryList(Role record);
+	
+	public List<Role> queryRolesByUserId(Integer userId);
 }
