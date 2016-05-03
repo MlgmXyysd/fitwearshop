@@ -10,6 +10,7 @@
 <script src="${ctx}/static/plugins/easyui/jquery/jquery-1.11.1.min.js"></script>
 
 <script src="${ctx}/static/plugins/easyui/jquery-easyui-1.3.6/jquery.easyui.min.js" type="text/javascript"></script>
+
 <script src="${ctx}/static/plugins/easyui/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
 
 <script src="${ctx}/static/plugins/easyui/release/jquery.jdirk.min.js"></script>
@@ -38,7 +39,8 @@
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.theme.js" type="text/javascript"></script>
 
 <script src="${ctx}/static/plugins/easyui/icons/jeasyui.icons.all.js" type="text/javascript"></script>
-    
+
+   
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.icons.js" type="text/javascript"></script>
 <script src="${ctx}/static/plugins/easyui/jeasyui-extensions/jeasyui.extensions.gridselector.js" type="text/javascript"></script>
 

@@ -51,7 +51,7 @@ $(function(){
 	striped:true,
 	pagination:true,
     columns:[[    
-        {field:'id',title:'id',hidden:true,width:20},    
+        {field:'id',title:'id',width:20},    
         {field:'appname',title:'名称CN',width:80},
         {field:'appnameEn',title:'名称EN',width:80},
         {field:'category',title:'分类',width:120},
@@ -74,7 +74,7 @@ $(function(){
         onLoadSuccess: function () { //数据加载完毕事件
             var data = $('#category1').combobox('getData');
             if (data.length > 0) {
-                $("#category1").combobox('select', data[0].Code);
+                $("#category1").combobox('select', data[0].id);
             }
         }
     });
@@ -96,8 +96,8 @@ function add() {
 	}
 	d=$('#dlg').dialog({    
 	    title: '添加分类',    
-	    width: 450,    
-	    height: 320,    
+	    width: 650,    
+	    height: 480,    
 	    closed: false,    
 	    cache: false,
 	    maximizable:true,
@@ -125,8 +125,8 @@ function upd(){
 	parentPermId=row.pid;
 	d=$("#dlg").dialog({   
 	    title: '修改分类',    
-	    width: 450,    
-	    height: 320,    
+	    width: 650,    
+	    height: 480,    
 	    href:'${ctx}/fitshop/app/update/'+row.id,
 	    maximizable:true,
 	    modal:true,
