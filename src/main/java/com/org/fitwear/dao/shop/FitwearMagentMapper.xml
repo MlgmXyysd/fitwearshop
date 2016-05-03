@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.fitwear.dao.shop.FitwearMagentMapper">
+	<resultMap id="BaseResultMap" type="com.org.fitwear.model.shop.FitwearMagent">
+		<id column="mag_id" property="magId" jdbcType="BIGINT" />
+		<result column="mag_name" property="magName" jdbcType="VARCHAR" />
+		<result column="prud_id" property="prudId" jdbcType="VARCHAR" />
+		<result column="prud_name" property="prudName" jdbcType="VARCHAR" />
+		<result column="create_name" property="createName" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="mag_code" property="magCode" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		mag_id, mag_name, prud_id, prud_name, create_name, create_time, mag_code
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from fitwear_magent
+		where mag_id = #{magId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from fitwear_magent
+		where mag_id = #{magId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.fitwear.model.shop.FitwearMagent">
+		insert into fitwear_magent (mag_id, mag_name, prud_id,
+		prud_name, create_name, create_time,
+		mag_code)
+		values (#{magId,jdbcType=BIGINT}, #{magName,jdbcType=VARCHAR},
+		#{prudId,jdbcType=VARCHAR},
+		#{prudName,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+		#{magCode,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.fitwear.model.shop.FitwearMagent">
+		insert into fitwear_magent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="magId != null">
+				mag_id,
+			</if>
+			<if test="magName != null">
+				mag_name,
+			</if>
+			<if test="prudId != null">
+				prud_id,
+			</if>
+			<if test="prudName != null">
+				prud_name,
+			</if>
+			<if test="createName != null">
+				create_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="magCode != null">
+				mag_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="magId != null">
+				#{magId,jdbcType=BIGINT},
+			</if>
+			<if test="magName != null">
+				#{magName,jdbcType=VARCHAR},
+			</if>
+			<if test="prudId != null">
+				#{prudId,jdbcType=VARCHAR},
+			</if>
+			<if test="prudName != null">
+				#{prudName,jdbcType=VARCHAR},
+			</if>
+			<if test="createName != null">
+				#{createName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="magCode != null">
+				#{magCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.fitwear.model.shop.FitwearMagent">
+		update fitwear_magent
+		<set>
+			<if test="magName != null">
+				mag_name = #{magName,jdbcType=VARCHAR},
+			</if>
+			<if test="prudId != null">
+				prud_id = #{prudId,jdbcType=VARCHAR},
+			</if>
+			<if test="prudName != null">
+				prud_name = #{prudName,jdbcType=VARCHAR},
+			</if>
+			<if test="createName != null">
+				create_name = #{createName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="magCode != null">
+				mag_code = #{magCode,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where mag_id = #{magId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.fitwear.model.shop.FitwearMagent">
+		update fitwear_magent
+		set mag_name = #{magName,jdbcType=VARCHAR},
+		prud_id = #{prudId,jdbcType=VARCHAR},
+		prud_name = #{prudName,jdbcType=VARCHAR},
+		create_name = #{createName,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		mag_code = #{magCode,jdbcType=VARCHAR}
+		where mag_id = #{magId,jdbcType=BIGINT}
+	</update>
+
+	<sql id="modelwheresql">
+		<where>
+			<if test="magName != null">
+				and mag_name = #{magName,jdbcType=VARCHAR}
+			</if>
+			<if test="prudId != null">
+				and prud_id = #{prudId,jdbcType=VARCHAR}
+			</if>
+			<if test="prudName != null">
+				and prud_name = #{prudName,jdbcType=VARCHAR}
+			</if>
+			<if test="createName != null">
+				and create_name = #{createName,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime,jdbcType=VARCHAR}
+			</if>
+			<if test="magCode != null">
+				and mag_code = #{magCode,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.fitwear.model.shop.FitwearMagent">
+		SELECT
+		count(1)
+		FROM fitwear_magent
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+
+	<select id="queryPageList" resultMap="BaseResultMap"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		mag_id, mag_name, prud_id, prud_name, create_name, create_time,
+		mag_code
+		FROM fitwear_magent
+		WHERE 1=1
+		<if test="param != null">
+			<if test="param.magName != null">
+				and mag_name = #{param.magName,jdbcType=VARCHAR}
+			</if>
+			<if test="param.prudId != null">
+				and prud_id = #{param.prudId,jdbcType=VARCHAR}
+			</if>
+			<if test="param.prudName != null">
+				and prud_name = #{param.prudName,jdbcType=VARCHAR}
+			</if>
+			<if test="param.createName != null">
+				and create_name = #{param.createName,jdbcType=VARCHAR}
+			</if>
+			<if test="param.createTime != null">
+				and create_time = #{param.createTime,jdbcType=VARCHAR}
+			</if>
+			<if test="param.magCode != null">
+				and mag_code = #{param.magCode,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+			limit #{first,jdbcType=INTEGER},#{pageSize
+			,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="queryList" resultMap="BaseResultMap"
+		parameterType="com.org.fitwear.model.shop.FitwearMagent">
+		SELECT
+		mag_id, mag_name, prud_id, prud_name, create_name, create_time,
+		mag_code
+		FROM fitwear_magent
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+</mapper>

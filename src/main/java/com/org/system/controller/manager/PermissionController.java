@@ -59,6 +59,17 @@ public class PermissionController extends BaseController{
 	}
 	
 	/**
+	 * 菜单维护页面菜单集合
+	 */
+	@RequiresPermissions("sys:perm:menu:view")
+	@RequestMapping(value="menu/mlist.json",method = RequestMethod.GET)
+	@ResponseBody
+	public List<Permission>  menuListDate(){
+		List<Permission> permissionList=permissionService.getMenusList();
+		return permissionList;
+	}
+	
+	/**
 	 * 权限集合(JSON)
 	 */
 	@RequiresPermissions("sys:perm:view")
@@ -179,7 +190,7 @@ public class PermissionController extends BaseController{
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	@ResponseBody
 	public String update( @ModelAttribute("permission") Permission permission,Model model) {
-		permissionService.save(permission);
+		permissionService.update(permission);
 		return "success";
 	}
 

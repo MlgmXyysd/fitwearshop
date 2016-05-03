@@ -56,7 +56,7 @@ request.setAttribute("error", error);
 	</form>
 	</div>
 	<c:choose>
-		<c:when test="${error eq 'com.tianyu.jty.system.utils.CaptchaException'}">
+		<c:when test="${error eq 'com.org.utils.CaptchaException'}">
 			<script>
 				$(".login_main_errortip").html("验证码错误，请重试");
 			</script>

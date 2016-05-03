@@ -20,21 +20,26 @@
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from role_permission
+		delete from
+		role_permission
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<delete id="deleteByRoleId" parameterType="java.lang.Integer">
-		delete from role_permission
+		delete from
+		role_permission
 		where role_id = #{roleId,jdbcType=INTEGER}
 	</delete>
 	<delete id="deleteBypermissionId" parameterType="java.lang.Integer">
-		delete from role_permission
+		delete from
+		role_permission
 		where permission_id = #{permissionId,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.org.system.model.manager.RolePermission">
-		insert into role_permission (id, role_id, permission_id
+		insert into role_permission
+		(id, role_id, permission_id
 		)
-		values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
+		values (#{id,jdbcType=INTEGER},
+		#{roleId,jdbcType=INTEGER},
 		#{permissionId,jdbcType=INTEGER}
 		)
 	</insert>
@@ -76,9 +81,11 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.RolePermission">
-		update role_permission
+		update
+		role_permission
 		set role_id = #{roleId,jdbcType=INTEGER},
-		permission_id = #{permissionId,jdbcType=INTEGER}
+		permission_id
+		= #{permissionId,jdbcType=INTEGER}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 
@@ -90,26 +97,25 @@
 		PERMISSION_ID
 		FROM role_permission
 		WHERE
-		role_id = #{roleId}
+		role_id =
+		#{roleId}
 	</select>
 	<delete id="deleteRP" parameterType="com.org.system.model.manager.RolePermission">
 		delete from role_permission
 		where role_id = #{roleId}
 		and permission_id = #{permissionId}
 	</delete>
-	
+
 	<sql id="modelwheresql">
-		<where>
-			<if test="roleId != null">
-				and id = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="roleId != null">
-				and role_id = #{roleId,jdbcType=INTEGER}
-			</if>
-			<if test="permissionId != null">
-				and permission_id = #{permissionId,jdbcType=INTEGER}
-			</if>
-		</where>
+		<if test="roleId != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="roleId != null">
+			and role_id = #{roleId,jdbcType=INTEGER}
+		</if>
+		<if test="permissionId != null">
+			and permission_id = #{permissionId,jdbcType=INTEGER}
+		</if>
 	</sql>
 	<select id="queryPageCount" resultType="java.lang.Long"
 		parameterType="com.org.system.model.manager.RolePermission">
@@ -119,7 +125,7 @@
 		WHERE 1=1
 		<include refid="modelwheresql" />
 	</select>
-	
+
 	<select id="queryPageList" resultMap="BaseResultMap"
 		parameterType="com.org.system.model.manager.Page">
 		SELECT
@@ -134,14 +140,16 @@
 				and role_id = #{param.roleId,jdbcType=INTEGER}
 			</if>
 			<if test="param.permissionId != null">
-				and permission_id = #{param.permissionId,jdbcType=INTEGER}
+				and permission_id =
+				#{param.permissionId,jdbcType=INTEGER}
 			</if>
 		</if>
 		<if test="pageSize != null and first != null">
-			limit #{first,jdbcType=INTEGER},#{pageSize ,jdbcType=INTEGER}
+			limit #{first,jdbcType=INTEGER},#{pageSize
+			,jdbcType=INTEGER}
 		</if>
 	</select>
-	
+
 	<select id="queryList" resultMap="BaseResultMap"
 		parameterType="com.org.system.model.manager.RolePermission">
 		SELECT

@@ -199,6 +199,14 @@
 		 order by p.sort
 	</select>
 	
+	<select id="getMenusList" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		 SELECT
+		 DISTINCT(p.id),	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
+		 FROM permission p
+		 where p.TYPE='F'  
+		 order by p.sort
+	</select>
+	
 	<select id="getMenuOperation" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
 		 SELECT
 		 p.id,	p.pid,	p.name,	p.type,	p.sort,	p.url,	p.perm_code,	p.icon,	p.state,	p.description
@@ -208,7 +216,6 @@
 	
 	
 	<sql id="modelwheresql">
-		<where>
 			<if test="pid != null">
 				and pid = #{pid,jdbcType=INTEGER}
 			</if>
@@ -233,7 +240,6 @@
 			<if test="state != null">
 				and state = #{state,jdbcType=VARCHAR}
 			</if>
-		</where>
 	</sql>
 	<select id="queryPageCount" resultType="java.lang.Long"
 		parameterType="com.org.system.model.manager.Permission">

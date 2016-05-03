@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.alibaba.fastjson.JSON;
 import com.org.system.model.manager.Page;
 
 
@@ -125,6 +126,19 @@ public class BaseController {
 		map.put("rows", page.getResult());
 		map.put("total", page.getTotalCount());
 		return map;
+	}
+	
+	/**
+	 * 获取easyui分页数据
+	 * @param <T>
+	 * @param page
+	 * @return map对象
+	 */
+	public <T> String getEasyUIDataJson(Page<T> page){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("rows", page.getResult());
+		map.put("total", page.getTotalCount());
+		return JSON.toJSONString(map);
 	}
 
 }

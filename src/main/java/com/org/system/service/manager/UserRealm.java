@@ -24,7 +24,6 @@ import com.google.common.base.Objects;
 import com.org.system.model.manager.Permission;
 import com.org.system.model.manager.Role;
 import com.org.system.model.manager.User;
-import com.org.system.model.manager.UserRole;
 import com.org.utils.CaptchaException;
 import com.org.utils.Encodes;
 

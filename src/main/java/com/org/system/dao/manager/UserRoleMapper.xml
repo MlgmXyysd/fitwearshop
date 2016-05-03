@@ -103,6 +103,7 @@
 	
 	<sql id="modelwheresql">
 		<where>
+			1=1
 			<if test="id != null">
 				and id = #{id,jdbcType=INTEGER}
 			</if>
@@ -119,7 +120,7 @@
 		SELECT
 		count(1)
 		FROM user_role
-		WHERE 1=1
+		WHERE 
 		<include refid="modelwheresql" />
 	</select>
 	

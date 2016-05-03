@@ -43,6 +43,15 @@ public interface PermissionMapper {
 	 * @return 菜单集合
 	 */
 	public List<Permission> getMenus(Integer userId);
+	
+	/**
+	 * 获取角色拥有的菜单
+	 * 
+	 * @param userId
+	 * @return 菜单集合
+	 */
+	public List<Permission> getMenusList();
+	
 
 	/**
 	 * 获取菜单下的操作

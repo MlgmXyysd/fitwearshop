@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.fitwear.dao.shop.ScCategoryMapper">
+	<resultMap id="BaseResultMap" type="com.org.fitwear.model.shop.ScCategory">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="catename" property="catename" jdbcType="VARCHAR" />
+		<result column="cateflag" property="cateflag" jdbcType="VARCHAR" />
+		<result column="parantid" property="parantid" jdbcType="VARCHAR" />
+		<result column="isdel" property="isdel" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, catename, cateflag, parantid, isdel
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sc_category
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sc_category
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.fitwear.model.shop.ScCategory">
+		insert into sc_category (id, catename, cateflag,
+		parantid, isdel)
+		values (#{id,jdbcType=BIGINT}, #{catename,jdbcType=VARCHAR},
+		#{cateflag,jdbcType=VARCHAR},
+		#{parantid,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.fitwear.model.shop.ScCategory">
+		insert into sc_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="catename != null">
+				catename,
+			</if>
+			<if test="cateflag != null">
+				cateflag,
+			</if>
+			<if test="parantid != null">
+				parantid,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="catename != null">
+				#{catename,jdbcType=VARCHAR},
+			</if>
+			<if test="cateflag != null">
+				#{cateflag,jdbcType=VARCHAR},
+			</if>
+			<if test="parantid != null">
+				#{parantid,jdbcType=VARCHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.fitwear.model.shop.ScCategory">
+		update sc_category
+		<set>
+			<if test="catename != null">
+				catename = #{catename,jdbcType=VARCHAR},
+			</if>
+			<if test="cateflag != null">
+				cateflag = #{cateflag,jdbcType=VARCHAR},
+			</if>
+			<if test="parantid != null">
+				parantid = #{parantid,jdbcType=VARCHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.fitwear.model.shop.ScCategory">
+		update sc_category
+		set catename = #{catename,jdbcType=VARCHAR},
+		cateflag = #{cateflag,jdbcType=VARCHAR},
+		parantid = #{parantid,jdbcType=VARCHAR},
+		isdel = #{isdel,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<sql id="modelwheresql">
+		<where>
+			<if test="catename != null">
+				and catename = #{catename,jdbcType=VARCHAR}
+			</if>
+			<if test="cateflag != null">
+				and cateflag = #{cateflag,jdbcType=VARCHAR}
+			</if>
+			<if test="parantid != null">
+				and parantid = #{parantid,jdbcType=VARCHAR}
+			</if>
+			<if test="isdel != null">
+				and isdel = #{isdel,jdbcType=INTEGER},
+			</if>
+		</where>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.fitwear.model.shop.ScCategory">
+		SELECT
+		count(1)
+		FROM sc_category
+		WHERE 1=1
+		<include refid="modelwheresql" />
+	</select>
+
+	<select id="queryPageList" resultMap="BaseResultMap"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		id, catename, cateflag, parantid, isdel
+		FROM sc_category
+		WHERE
+		1=1
+		<if test="param != null">
+			<if test="param.catename != null">
+				and catename = #{param.catename,jdbcType=VARCHAR}
+			</if>
+			<if test="param.cateflag != null">
+				and cateflag = #{param.cateflag,jdbcType=VARCHAR}
+			</if>
+			<if test="param.parantid != null">
+				and parantid = #{param.parantid,jdbcType=VARCHAR}
+			</if>
+			<if test="param.isdel != null">
+				and isdel = #{param.isdel,jdbcType=INTEGER},
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+			limit #{first,jdbcType=INTEGER},#{pageSize
+			,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="queryList" resultMap="BaseResultMap"
+		parameterType="com.org.fitwear.model.shop.ScCategory">
+		SELECT
+		id, catename, cateflag, parantid, isdel
+		FROM sc_category
+		WHERE
+		1=1
+		<include refid="modelwheresql" />
+	</select>
+</mapper>

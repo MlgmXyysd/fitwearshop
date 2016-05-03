@@ -8,15 +8,15 @@
 <body style="font-family: '微软雅黑'">
 <div id="tb" style="padding:5px;height:auto">
     <div>
-    	<shiro:hasPermission name="sys:perm:add">
+    	<shiro:hasPermission name="fitshop:category:add">
     	<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-add" onclick="add();">添加</a>
     	<span class="toolbar-item dialog-tool-separator"></span>
     	</shiro:hasPermission>
-        <shiro:hasPermission name="sys:perm:delete">
+        <shiro:hasPermission name="fitshop:category:delete">
         <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-remove" onclick="del()">删除</a>
         <span class="toolbar-item dialog-tool-separator"></span>
         </shiro:hasPermission>
-        <shiro:hasPermission name="sys:perm:update">
+        <shiro:hasPermission name="fitshop:category:update">
         <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-edit" onclick="upd()">修改</a>
         </shiro:hasPermission>
     </div>
@@ -32,32 +32,21 @@ var d;
 var permissionDg;
 var parentPermId;
 $(function(){   
-	dg=$('#dg').treegrid({  
+	dg=$('#dg').datagrid({  
 	method: "get",
-    url:'${ctx}/system/permission/menu/mlist.json', 
-    fit : true,
-	fitColumns : true,
-	border : false,
+    url:'${ctx}/fitshop/category/list.json', 
 	idField : 'id',
-	treeField:'name',
-	parentField : 'pid',
 	iconCls: 'icon',
 	animate:true, 
 	rownumbers:true,
 	singleSelect:true,
-	striped:true,
+	fit : true,
+	fitColumns : true,
     columns:[[    
-        {field:'id',title:'id',hidden:true,width:100},    
-        {field:'name',title:'名称',width:100},
-        {field:'url',title:'资源路径',width:100},
-        {field:'sort',title:'排序'},
-        {field:'description',title:'描述',width:100}
+        {field:'id',title:'id',width:100},    
+        {field:'catename',title:'名称',width:100}
     ]],
-    enableHeaderClickMenu: false,
-    enableHeaderContextMenu: false,
-    enableRowContextMenu: false,
-    toolbar:'#tb',
-    dataPlain: true
+    toolbar:'#tb'
 	});
 	
 });
@@ -69,16 +58,15 @@ function add() {
 	if(row){
 		parentPermId=row.id;
 	}
-	
 	d=$('#dlg').dialog({    
-	    title: '添加菜单',    
+	    title: '添加分类',    
 	    width: 450,    
 	    height: 320,    
 	    closed: false,    
 	    cache: false,
 	    maximizable:true,
 	    resizable:true,
-	    href:'${ctx}/system/permission/menu/create',
+	    href:'${ctx}/fitshop/category/create',
 	    modal: true,
 	    buttons:[{
 			text:'确认',
@@ -93,27 +81,6 @@ function add() {
 		}]
 	});
 }
-
-//删除
-function del(){
-	var row = dg.treegrid('getSelected');
-	if(rowIsNull(row)) return;
-	parent.$.messager.confirm('提示', '删除后无法恢复您确定要删除？', function(data){
-		if (data){
-			$.ajax({
-				type:'get',
-				url:"${ctx}/system/permission/delete/"+row.id+"/lag.html",
-				success: function(data){
-					if(successTip(data,dg))
-			    		dg.treegrid('reload');
-				}
-			});
-			//dg.datagrid('reload'); //grid移除一行,不需要再刷新
-		} 
-	});
-
-}
-
 //修改
 function upd(){
 	var row = dg.treegrid('getSelected');
@@ -121,10 +88,10 @@ function upd(){
 	//父级权限
 	parentPermId=row.pid;
 	d=$("#dlg").dialog({   
-	    title: '修改菜单',    
+	    title: '修改分类',    
 	    width: 450,    
 	    height: 320,    
-	    href:'${ctx}/system/permission/menu/update/'+row.id,
+	    href:'${ctx}/fitshop/category/update/'+row.id,
 	    maximizable:true,
 	    modal:true,
 	    buttons:[{
@@ -142,6 +109,25 @@ function upd(){
 
 }
 
+//删除
+function del(){
+	var row = dg.treegrid('getSelected');
+	if(rowIsNull(row)) return;
+	parent.$.messager.confirm('提示', '删除后无法恢复您确定要删除？', function(data){
+		if (data){
+			$.ajax({
+				type:'get',
+				url:"${ctx}/fitshop/category/delete/"+row.id,
+				success: function(data){
+					if(successTip(data,dg))
+			    		dg.treegrid('reload');
+				}
+			});
+			//dg.datagrid('reload'); //grid移除一行,不需要再刷新
+		} 
+	});
+
+}
 var nowIcon;
 var icon_dlg;
 </script>

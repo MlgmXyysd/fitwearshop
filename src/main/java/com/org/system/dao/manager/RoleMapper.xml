@@ -34,12 +34,15 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.org.system.model.manager.Role">
-		insert into role (id, name, role_code,
+		insert into role (id, name,
+		role_code,
 		sort, del_flag, description
 		)
-		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
 		#{roleCode,jdbcType=VARCHAR},
-		#{sort,jdbcType=SMALLINT}, #{delFlag,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
+		#{sort,jdbcType=SMALLINT}, #{delFlag,jdbcType=VARCHAR},
+		#{description,jdbcType=LONGVARCHAR}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.org.system.model.manager.Role">
@@ -107,38 +110,42 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.org.system.model.manager.Role">
-		update role
+		update
+		role
 		set name = #{name,jdbcType=VARCHAR},
-		role_code = #{roleCode,jdbcType=VARCHAR},
+		role_code =
+		#{roleCode,jdbcType=VARCHAR},
 		sort = #{sort,jdbcType=SMALLINT},
 		del_flag = #{delFlag,jdbcType=VARCHAR},
-		description = #{description,jdbcType=LONGVARCHAR}
+		description =
+		#{description,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.org.system.model.manager.Role">
 		update role
-		set name = #{name,jdbcType=VARCHAR},
-		role_code = #{roleCode,jdbcType=VARCHAR},
+		set
+		name = #{name,jdbcType=VARCHAR},
+		role_code =
+		#{roleCode,jdbcType=VARCHAR},
 		sort = #{sort,jdbcType=SMALLINT},
 		del_flag = #{delFlag,jdbcType=VARCHAR}
-		where id = #{id,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
 	</update>
-	
+
 	<sql id="modelwheresql">
-		<where>
-			<if test="name != null">
-				and name = #{name,jdbcType=VARCHAR}
-			</if>
-			<if test="roleCode != null">
-				and role_code = #{roleCode,jdbcType=VARCHAR}
-			</if>
-			<if test="sort != null">
-				and sort = #{sort,jdbcType=SMALLINT}
-			</if>
-			<if test="delFlag != null">
-				and del_flag = #{delFlag,jdbcType=VARCHAR}
-			</if>
-		</where>
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="roleCode != null">
+			and role_code = #{roleCode,jdbcType=VARCHAR}
+		</if>
+		<if test="sort != null">
+			and sort = #{sort,jdbcType=SMALLINT}
+		</if>
+		<if test="delFlag != null">
+			and del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
 	</sql>
 	<select id="queryPageCount" resultType="java.lang.Long"
 		parameterType="com.org.system.model.manager.Role">
@@ -148,13 +155,14 @@
 		WHERE 1=1
 		<include refid="modelwheresql" />
 	</select>
-	
+
 	<select id="queryPageList" resultMap="ResultMapWithBLOBs"
 		parameterType="com.org.system.model.manager.Page">
 		SELECT
 		id, name, role_code, sort, del_flag,description
 		FROM role
-		WHERE 1=1
+		WHERE
+		1=1
 		<if test="param != null">
 			<if test="param.name != null">
 				and name = #{param.name,jdbcType=VARCHAR}
@@ -170,25 +178,30 @@
 			</if>
 		</if>
 		<if test="pageSize != null and first != null">
-			limit #{first,jdbcType=INTEGER},#{pageSize ,jdbcType=INTEGER}
+			limit #{first,jdbcType=INTEGER},#{pageSize
+			,jdbcType=INTEGER}
 		</if>
 	</select>
-	
+
 	<select id="queryList" resultMap="ResultMapWithBLOBs"
 		parameterType="com.org.system.model.manager.Role">
 		SELECT
 		id, name, role_code, sort, del_flag,description
 		FROM role
-		WHERE 1=1
+		WHERE
+		1=1
 		<include refid="modelwheresql" />
 	</select>
-	
-	<select id="queryRolesByUserId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+
+	<select id="queryRolesByUserId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
 		SELECT
-		DISTINCT(r.id), r.name, r.role_code, r.sort, r.del_flag,r.description
+		DISTINCT(r.id), r.name, r.role_code, r.sort,
+		r.del_flag,r.description
 		FROM user_role ur
-		LEFT JOIN  role r on r.id = ur.role_id
+		LEFT JOIN role r on r.id =
+		ur.role_id
 		WHERE ur.user_id = #{userId,jdbcType=INTEGER}
 	</select>
-	
+
 </mapper>

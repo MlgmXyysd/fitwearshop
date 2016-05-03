@@ -7,16 +7,21 @@
 </head>
 <body style="font-family: '微软雅黑'">
 <div id="tb" style="padding:5px;height:auto">
+	<div>
+		名称: <input type="text" id="appname1" name="appname1" />
+		分类: <input id="category1" name="category1"/>
+		<a href="#" id="submit_search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+	</div>
     <div>
-    	<shiro:hasPermission name="sys:perm:add">
+    	<shiro:hasPermission name="fitshop:app:add">
     	<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-add" onclick="add();">添加</a>
     	<span class="toolbar-item dialog-tool-separator"></span>
     	</shiro:hasPermission>
-        <shiro:hasPermission name="sys:perm:delete">
+        <shiro:hasPermission name="fitshop:app:delete">
         <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-remove" onclick="del()">删除</a>
         <span class="toolbar-item dialog-tool-separator"></span>
         </shiro:hasPermission>
-        <shiro:hasPermission name="sys:perm:update">
+        <shiro:hasPermission name="fitshop:app:update">
         <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-edit" onclick="upd()">修改</a>
         </shiro:hasPermission>
     </div>
@@ -32,32 +37,55 @@ var d;
 var permissionDg;
 var parentPermId;
 $(function(){   
-	dg=$('#dg').treegrid({  
+	dg=$('#dg').datagrid({  
 	method: "get",
-    url:'${ctx}/shop/goodsType/json', 
+    url:'${ctx}/fitshop/app/list.json', 
     fit : true,
 	fitColumns : true,
 	border : false,
 	idField : 'id',
-	treeField:'name',
-	parentField : 'pid',
+	iconCls: 'icon',
 	animate:true, 
 	rownumbers:true,
 	singleSelect:true,
 	striped:true,
+	pagination:true,
     columns:[[    
-        {field:'id',title:'id',hidden:true,width:100},    
-        {field:'name',title:'名称',width:100},
-        {field:'img',title:'图片',width:100}
+        {field:'id',title:'id',hidden:true,width:20},    
+        {field:'appname',title:'名称CN',width:80},
+        {field:'appnameEn',title:'名称EN',width:80},
+        {field:'category',title:'分类',width:120},
+        {field:'logo',title:'LOGO',width:120,
+        	formatter:function(value, rec){//使用formatter格式化刷子
+        		arr=value.split(","); 
+        		return '<img src="'+arr[0]+'" style="width:35px;height:35px;"/>';
+        	}
+        },
+        {field:'packagename',title:'包名'}
     ]],
-    enableHeaderClickMenu: false,
-    enableHeaderContextMenu: false,
-    enableRowContextMenu: false,
     toolbar:'#tb',
-    dataPlain: true
 	});
-	
+    $('#category1').combobox({
+        url:'${ctx}/fitshop/category/all.json',
+        valueField:'id',
+        textField:'catename',
+        panelHeight:"auto",
+        editable: false,
+        onLoadSuccess: function () { //数据加载完毕事件
+            var data = $('#category1').combobox('getData');
+            if (data.length > 0) {
+                $("#category1").combobox('select', data[0].Code);
+            }
+        }
+    });
+    $("#submit_search").click(function () {
+        $('#dg').datagrid({ queryParams: {
+        	appname:$("#appname1").val(),
+        	category:$("#category1").combobox("getValue")
+        	}});   //点击搜索
+    });
 });
+
 
 //弹窗增加
 function add() {
@@ -66,16 +94,15 @@ function add() {
 	if(row){
 		parentPermId=row.id;
 	}
-	
 	d=$('#dlg').dialog({    
-	    title: '添加菜单',    
+	    title: '添加分类',    
 	    width: 450,    
 	    height: 320,    
 	    closed: false,    
 	    cache: false,
 	    maximizable:true,
 	    resizable:true,
-	    href:'${ctx}/shop/goodsType/create',
+	    href:'${ctx}/fitshop/app/create',
 	    modal: true,
 	    buttons:[{
 			text:'确认',
@@ -90,27 +117,6 @@ function add() {
 		}]
 	});
 }
-
-//删除
-function del(){
-	var row = dg.treegrid('getSelected');
-	if(rowIsNull(row)) return;
-	parent.$.messager.confirm('提示', '删除后无法恢复您确定要删除？', function(data){
-		if (data){
-			$.ajax({
-				type:'get',
-				url:"${ctx}/shop/goodsType/delete/"+row.id,
-				success: function(data){
-					if(successTip(data,dg))
-			    		dg.treegrid('reload');
-				}
-			});
-			//dg.datagrid('reload'); //grid移除一行,不需要再刷新
-		} 
-	});
-
-}
-
 //修改
 function upd(){
 	var row = dg.treegrid('getSelected');
@@ -118,10 +124,10 @@ function upd(){
 	//父级权限
 	parentPermId=row.pid;
 	d=$("#dlg").dialog({   
-	    title: '修改菜单',    
+	    title: '修改分类',    
 	    width: 450,    
 	    height: 320,    
-	    href:'${ctx}/shop/goodsType/update/'+row.id,
+	    href:'${ctx}/fitshop/app/update/'+row.id,
 	    maximizable:true,
 	    modal:true,
 	    buttons:[{
@@ -139,6 +145,25 @@ function upd(){
 
 }
 
+//删除
+function del(){
+	var row = dg.treegrid('getSelected');
+	if(rowIsNull(row)) return;
+	parent.$.messager.confirm('提示', '删除后无法恢复您确定要删除？', function(data){
+		if (data){
+			$.ajax({
+				type:'get',
+				url:"${ctx}/fitshop/app/delete/"+row.id,
+				success: function(data){
+					if(successTip(data,dg))
+			    		dg.treegrid('reload');
+				}
+			});
+			//dg.datagrid('reload'); //grid移除一行,不需要再刷新
+		} 
+	});
+
+}
 var nowIcon;
 var icon_dlg;
 </script>

@@ -28,7 +28,7 @@ public class LoginController{
 		if(subject.isAuthenticated()||subject.isRemembered()){
 			return "redirect:"+"index";
 		} 
-		return "system/login";
+		return "redirect:/welcome";
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class LoginController{
 	@RequestMapping(value="login",method = RequestMethod.POST)
 	public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
-		return "system/login";
+		return "redirect:/welcome";
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class LoginController{
 	public String logout(Model model) {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
-		return "system/login";
+		return "redirect:/welcome";
 	}
 	
 	

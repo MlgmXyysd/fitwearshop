@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.fitwear.dao.shop.FitwearAppMapper">
+	<resultMap id="BaseResultMap" type="com.org.fitwear.model.shop.FitwearApp">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="appname" property="appname" jdbcType="VARCHAR" />
+		<result column="appname_en" property="appnameEn" jdbcType="VARCHAR" />
+		<result column="category" property="category" jdbcType="VARCHAR" />
+		<result column="developer" property="developer" jdbcType="VARCHAR" />
+		<result column="developer_en" property="developerEn" jdbcType="VARCHAR" />
+		<result column="vername" property="vername" jdbcType="VARCHAR" />
+		<result column="vername_en" property="vernameEn" jdbcType="VARCHAR" />
+		<result column="vercode" property="vercode" jdbcType="VARCHAR" />
+		<result column="summary" property="summary" jdbcType="VARCHAR" />
+		<result column="summary_en" property="summaryEn" jdbcType="VARCHAR" />
+		<result column="descript_en" property="descriptEn" jdbcType="VARCHAR" />
+		<result column="descript" property="descript" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="imgs" property="imgs" jdbcType="VARCHAR" />
+		<result column="imgs_en" property="imgsEn" jdbcType="VARCHAR" />
+		<result column="m_apk" property="mApk" jdbcType="VARCHAR" />
+		<result column="m_apk_en" property="mApkEn" jdbcType="VARCHAR" />
+		<result column="f_apk" property="fApk" jdbcType="VARCHAR" />
+		<result column="f_apk_en" property="fApkEn" jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="operater" property="operater" jdbcType="VARCHAR" />
+		<result column="isdel" property="isdel" jdbcType="INTEGER" />
+		<result column="sortorder" property="sortorder" jdbcType="VARCHAR" />
+		<result column="m_apk_size" property="mApkSize" jdbcType="VARCHAR" />
+		<result column="f_apk_size" property="fApkSize" jdbcType="VARCHAR" />
+		<result column="packagename" property="packagename" jdbcType="VARCHAR" />
+		<result column="magentlist" property="magentlist" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, appname, appname_en, category, developer, developer_en,
+		vername,
+		vername_en,
+		vercode, summary, summary_en, descript_en,
+		descript, logo, imgs, imgs_en,
+		m_apk,
+		m_apk_en, f_apk, f_apk_en,
+		createtime, operater, isdel, sortorder, m_apk_size,
+		f_apk_size,
+		packagename, magentlist
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from fitwear_app
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		fitwear_app
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.fitwear.model.shop.FitwearApp">
+		insert into fitwear_app (id,
+		appname, appname_en,
+		category, developer, developer_en,
+		vername,
+		vername_en, vercode,
+		summary, summary_en, descript_en,
+		descript, logo,
+		imgs,
+		imgs_en, m_apk, m_apk_en,
+		f_apk, f_apk_en, createtime,
+		operater,
+		isdel, sortorder,
+		m_apk_size, f_apk_size, packagename,
+		magentlist)
+		values (#{id,jdbcType=BIGINT}, #{appname,jdbcType=VARCHAR},
+		#{appnameEn,jdbcType=VARCHAR},
+		#{category,jdbcType=VARCHAR},
+		#{developer,jdbcType=VARCHAR}, #{developerEn,jdbcType=VARCHAR},
+		#{vername,jdbcType=VARCHAR}, #{vernameEn,jdbcType=VARCHAR},
+		#{vercode,jdbcType=VARCHAR},
+		#{summary,jdbcType=VARCHAR},
+		#{summaryEn,jdbcType=VARCHAR}, #{descriptEn,jdbcType=VARCHAR},
+		#{descript,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR},
+		#{imgs,jdbcType=VARCHAR},
+		#{imgsEn,jdbcType=VARCHAR},
+		#{mApk,jdbcType=VARCHAR}, #{mApkEn,jdbcType=VARCHAR},
+		#{fApk,jdbcType=VARCHAR}, #{fApkEn,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{operater,jdbcType=VARCHAR},
+		#{isdel,jdbcType=INTEGER}, #{sortorder,jdbcType=VARCHAR},
+		#{mApkSize,jdbcType=VARCHAR}, #{fApkSize,jdbcType=VARCHAR},
+		#{packagename,jdbcType=VARCHAR},
+		#{magentlist,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.fitwear.model.shop.FitwearApp">
+		insert into fitwear_app
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="appname != null">
+				appname,
+			</if>
+			<if test="appnameEn != null">
+				appname_en,
+			</if>
+			<if test="category != null">
+				category,
+			</if>
+			<if test="developer != null">
+				developer,
+			</if>
+			<if test="developerEn != null">
+				developer_en,
+			</if>
+			<if test="vername != null">
+				vername,
+			</if>
+			<if test="vernameEn != null">
+				vername_en,
+			</if>
+			<if test="vercode != null">
+				vercode,
+			</if>
+			<if test="summary != null">
+				summary,
+			</if>
+			<if test="summaryEn != null">
+				summary_en,
+			</if>
+			<if test="descriptEn != null">
+				descript_en,
+			</if>
+			<if test="descript != null">
+				descript,
+			</if>
+			<if test="logo != null">
+				logo,
+			</if>
+			<if test="imgs != null">
+				imgs,
+			</if>
+			<if test="imgsEn != null">
+				imgs_en,
+			</if>
+			<if test="mApk != null">
+				m_apk,
+			</if>
+			<if test="mApkEn != null">
+				m_apk_en,
+			</if>
+			<if test="fApk != null">
+				f_apk,
+			</if>
+			<if test="fApkEn != null">
+				f_apk_en,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="operater != null">
+				operater,
+			</if>
+			<if test="isdel != null">
+				isdel,
+			</if>
+			<if test="sortorder != null">
+				sortorder,
+			</if>
+			<if test="mApkSize != null">
+				m_apk_size,
+			</if>
+			<if test="fApkSize != null">
+				f_apk_size,
+			</if>
+			<if test="packagename != null">
+				packagename,
+			</if>
+			<if test="magentlist != null">
+				magentlist,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="appname != null">
+				#{appname,jdbcType=VARCHAR},
+			</if>
+			<if test="appnameEn != null">
+				#{appnameEn,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				#{category,jdbcType=VARCHAR},
+			</if>
+			<if test="developer != null">
+				#{developer,jdbcType=VARCHAR},
+			</if>
+			<if test="developerEn != null">
+				#{developerEn,jdbcType=VARCHAR},
+			</if>
+			<if test="vername != null">
+				#{vername,jdbcType=VARCHAR},
+			</if>
+			<if test="vernameEn != null">
+				#{vernameEn,jdbcType=VARCHAR},
+			</if>
+			<if test="vercode != null">
+				#{vercode,jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				#{summary,jdbcType=VARCHAR},
+			</if>
+			<if test="summaryEn != null">
+				#{summaryEn,jdbcType=VARCHAR},
+			</if>
+			<if test="descriptEn != null">
+				#{descriptEn,jdbcType=VARCHAR},
+			</if>
+			<if test="descript != null">
+				#{descript,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				#{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="imgs != null">
+				#{imgs,jdbcType=VARCHAR},
+			</if>
+			<if test="imgsEn != null">
+				#{imgsEn,jdbcType=VARCHAR},
+			</if>
+			<if test="mApk != null">
+				#{mApk,jdbcType=VARCHAR},
+			</if>
+			<if test="mApkEn != null">
+				#{mApkEn,jdbcType=VARCHAR},
+			</if>
+			<if test="fApk != null">
+				#{fApk,jdbcType=VARCHAR},
+			</if>
+			<if test="fApkEn != null">
+				#{fApkEn,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operater != null">
+				#{operater,jdbcType=VARCHAR},
+			</if>
+			<if test="isdel != null">
+				#{isdel,jdbcType=INTEGER},
+			</if>
+			<if test="sortorder != null">
+				#{sortorder,jdbcType=VARCHAR},
+			</if>
+			<if test="mApkSize != null">
+				#{mApkSize,jdbcType=VARCHAR},
+			</if>
+			<if test="fApkSize != null">
+				#{fApkSize,jdbcType=VARCHAR},
+			</if>
+			<if test="packagename != null">
+				#{packagename,jdbcType=VARCHAR},
+			</if>
+			<if test="magentlist != null">
+				#{magentlist,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.fitwear.model.shop.FitwearApp">
+		update fitwear_app
+		<set>
+			<if test="appname != null">
+				appname = #{appname,jdbcType=VARCHAR},
+			</if>
+			<if test="appnameEn != null">
+				appname_en = #{appnameEn,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				category = #{category,jdbcType=VARCHAR},
+			</if>
+			<if test="developer != null">
+				developer = #{developer,jdbcType=VARCHAR},
+			</if>
+			<if test="developerEn != null">
+				developer_en = #{developerEn,jdbcType=VARCHAR},
+			</if>
+			<if test="vername != null">
+				vername = #{vername,jdbcType=VARCHAR},
+			</if>
+			<if test="vernameEn != null">
+				vername_en = #{vernameEn,jdbcType=VARCHAR},
+			</if>
+			<if test="vercode != null">
+				vercode = #{vercode,jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				summary = #{summary,jdbcType=VARCHAR},
+			</if>
+			<if test="summaryEn != null">
+				summary_en = #{summaryEn,jdbcType=VARCHAR},
+			</if>
+			<if test="descriptEn != null">
+				descript_en = #{descriptEn,jdbcType=VARCHAR},
+			</if>
+			<if test="descript != null">
+				descript = #{descript,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="imgs != null">
+				imgs = #{imgs,jdbcType=VARCHAR},
+			</if>
+			<if test="imgsEn != null">
+				imgs_en = #{imgsEn,jdbcType=VARCHAR},
+			</if>
+			<if test="mApk != null">
+				m_apk = #{mApk,jdbcType=VARCHAR},
+			</if>
+			<if test="mApkEn != null">
+				m_apk_en = #{mApkEn,jdbcType=VARCHAR},
+			</if>
+			<if test="fApk != null">
+				f_apk = #{fApk,jdbcType=VARCHAR},
+			</if>
+			<if test="fApkEn != null">
+				f_apk_en = #{fApkEn,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operater != null">
+				operater = #{operater,jdbcType=VARCHAR},
+			</if>
+			<if test="isdel != null">
+				isdel = #{isdel,jdbcType=INTEGER},
+			</if>
+			<if test="sortorder != null">
+				sortorder = #{sortorder,jdbcType=VARCHAR},
+			</if>
+			<if test="mApkSize != null">
+				m_apk_size = #{mApkSize,jdbcType=VARCHAR},
+			</if>
+			<if test="fApkSize != null">
+				f_apk_size = #{fApkSize,jdbcType=VARCHAR},
+			</if>
+			<if test="packagename != null">
+				packagename = #{packagename,jdbcType=VARCHAR},
+			</if>
+			<if test="magentlist != null">
+				magentlist = #{magentlist,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.fitwear.model.shop.FitwearApp">
+		update fitwear_app
+		set appname = #{appname,jdbcType=VARCHAR},
+		appname_en =
+		#{appnameEn,jdbcType=VARCHAR},
+		category = #{category,jdbcType=VARCHAR},
+		developer = #{developer,jdbcType=VARCHAR},
+		developer_en =
+		#{developerEn,jdbcType=VARCHAR},
+		vername = #{vername,jdbcType=VARCHAR},
+		vername_en = #{vernameEn,jdbcType=VARCHAR},
+		vercode =
+		#{vercode,jdbcType=VARCHAR},
+		summary = #{summary,jdbcType=VARCHAR},
+		summary_en = #{summaryEn,jdbcType=VARCHAR},
+		descript_en =
+		#{descriptEn,jdbcType=VARCHAR},
+		descript =
+		#{descript,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		imgs =
+		#{imgs,jdbcType=VARCHAR},
+		imgs_en = #{imgsEn,jdbcType=VARCHAR},
+		m_apk =
+		#{mApk,jdbcType=VARCHAR},
+		m_apk_en = #{mApkEn,jdbcType=VARCHAR},
+		f_apk =
+		#{fApk,jdbcType=VARCHAR},
+		f_apk_en = #{fApkEn,jdbcType=VARCHAR},
+		createtime = #{createtime,jdbcType=TIMESTAMP},
+		operater =
+		#{operater,jdbcType=VARCHAR},
+		isdel = #{isdel,jdbcType=INTEGER},
+		sortorder = #{sortorder,jdbcType=VARCHAR},
+		m_apk_size =
+		#{mApkSize,jdbcType=VARCHAR},
+		f_apk_size =
+		#{fApkSize,jdbcType=VARCHAR},
+		packagename =
+		#{packagename,jdbcType=VARCHAR},
+		magentlist =
+		#{magentlist,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+
+	<sql id="modelwheresql">
+		<if test="appname != null">
+			and appname like
+				CONCAT('%',#{appname,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="appnameEn != null">
+			and appname_en = #{appnameEn,jdbcType=VARCHAR}
+		</if>
+		<if test="category != null">
+			and category = #{category,jdbcType=VARCHAR}
+		</if>
+		<if test="developer != null">
+			and developer = #{developer,jdbcType=VARCHAR}
+		</if>
+		<if test="developerEn != null">
+			and developer_en = #{developerEn,jdbcType=VARCHAR}
+		</if>
+		<if test="vername != null">
+			and vername = #{vername,jdbcType=VARCHAR}
+		</if>
+		<if test="isdel != null">
+			and isdel = #{isdel,jdbcType=INTEGER}
+		</if>
+		<if test="packagename != null">
+			and packagename = #{packagename,jdbcType=VARCHAR}
+		</if>
+		<if test="magentlist != null">
+			and magentlist = #{magentlist,jdbcType=VARCHAR}
+		</if>
+	</sql>
+	<select id="queryPageCount" resultType="java.lang.Long"
+		parameterType="com.org.fitwear.model.shop.FitwearApp">
+		SELECT
+		count(1)
+		FROM fitwear_app
+		WHERE 1=1 and isdel=0
+		<include refid="modelwheresql" />
+	</select>
+
+	<select id="queryPageList" resultMap="BaseResultMap"
+		parameterType="com.org.system.model.manager.Page">
+		SELECT
+		id, appname, appname_en, category, developer, developer_en,
+		vername,
+		vername_en,
+		vercode, summary, summary_en, descript_en,
+		descript, logo, imgs, imgs_en,
+		m_apk,
+		m_apk_en, f_apk, f_apk_en,
+		createtime, operater, isdel, sortorder, m_apk_size,
+		f_apk_size,
+		packagename, magentlist
+		FROM fitwear_app
+		WHERE 1=1 and isdel=0
+		<if test="param != null">
+			<if test="param.appname != null">
+				and appname like
+				CONCAT('%',#{param.appname,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="param.category != null">
+				and category = #{param.category,jdbcType=VARCHAR}
+			</if>
+			<if test="param.developer != null">
+				and developer = #{param.developer,jdbcType=VARCHAR}
+			</if>
+			<if test="param.developerEn != null">
+				and developer_en = #{param.developerEn,jdbcType=VARCHAR}
+			</if>
+			<if test="param.vername != null">
+				and vername = #{param.vername,jdbcType=VARCHAR}
+			</if>
+			<if test="param.packagename != null">
+				and packagename = #{param.packagename,jdbcType=VARCHAR}
+			</if>
+			<if test="param.magentlist != null">
+				and magentlist = #{param.magentlist,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="pageSize != null and first != null">
+			limit #{first,jdbcType=INTEGER},#{pageSize
+			,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="queryList" resultMap="BaseResultMap"
+		parameterType="com.org.fitwear.model.shop.FitwearApp">
+		SELECT
+		id, appname, appname_en, category, developer, developer_en,
+		vername,
+		vername_en,
+		vercode, summary, summary_en, descript_en,
+		descript, logo, imgs, imgs_en,
+		m_apk,
+		m_apk_en, f_apk, f_apk_en,
+		createtime, operater, isdel, sortorder, m_apk_size,
+		f_apk_size,
+		packagename, magentlist
+		FROM fitwear_app
+		WHERE 1=1 and isdel=0
+		<include refid="modelwheresql" />
+	</select>
+</mapper>

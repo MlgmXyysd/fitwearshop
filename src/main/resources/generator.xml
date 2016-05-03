@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <!DOCTYPE generatorConfiguration   
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"   
-  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">   
-<generatorConfiguration>   
-  <classPathEntry location="C:\Users\jhwei\.m2\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" />  
-  <context id="DB2Tables" targetRuntime="MyBatis3">  
-	  <commentGenerator>  
-	   <property name="suppressAllComments" value="true" />      
-	  </commentGenerator>  
-	  <jdbcConnection driverClass="com.mysql.jdbc.Driver"  
-			  connectionURL="jdbc:mysql://127.0.0.1:3306/ahnew"  userId="root"  password="root">  
-	</jdbcConnection>  
-    
-	  <javaTypeResolver >  
-		 <property name="forceBigDecimals" value="false" />  
-	  </javaTypeResolver>  
- 		<!--  -->
-	  <javaModelGenerator targetPackage="com.org.system.model.manager" targetProject="F:\work\software\src">  
-		  <property name="enableSubPackages" value="true" />  
-		  <property name="trimStrings" value="true" />  
-	  </javaModelGenerator>  
-   
-	  <sqlMapGenerator targetPackage="com.org.system.dao.manager"  targetProject="F:\work\software\src">  
-		   <property name="enableSubPackages" value="false" />  
-	  </sqlMapGenerator>  
-	  
-	
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry
+		location="C:\Users\jhwei\.m2\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" />
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/ahnew" userId="root"
+			password="root">
+		</jdbcConnection>
 
-	  <javaClientGenerator type="XMLMAPPER" targetPackage="com.org.system.dao.manager"  targetProject="F:\work\software\src">  
-		<property name="enableSubPackages" value="true" />  
-	  </javaClientGenerator>  
-  
-	<!--   permission, role, role_permission, user, user_role -->
-	  
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- -->
+		<javaModelGenerator targetPackage="com.org.fitwear.model.shop"
+			targetProject="F:\work\software\src">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
 
-	   <table schema="permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-	   selectByExampleQueryId="false" tableName="permission" domainObjectName="Permission" ></table>
-	   
-	   <table schema="role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-	   selectByExampleQueryId="false" tableName="role" domainObjectName="Role" ></table>
-	   
-	   <table schema="role_permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-	   selectByExampleQueryId="false" tableName="role_permission" domainObjectName="RolePermission" ></table>
-	   
-	   
-	   <table schema="user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-	   selectByExampleQueryId="false" tableName="user" domainObjectName="User" ></table>
-	   
-	   <table schema="user_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
-	   selectByExampleQueryId="false" tableName="user_role" domainObjectName="UserRole" ></table>
-    </context>  
+		<sqlMapGenerator targetPackage="com.org.fitwear.dao.shop"
+			targetProject="F:\work\software\src">
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.org.fitwear.dao.shop" targetProject="F:\work\software\src">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!-- permission, role, role_permission, user, user_role -->
+
+
+		<!-- <table schema="permission" enableCountByExample="false" enableUpdateByExample="false" 
+			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
+			tableName="permission" domainObjectName="Permission" ></table> <table schema="role" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false" tableName="role" 
+			domainObjectName="Role" ></table> <table schema="role_permission" enableCountByExample="false" 
+			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
+			selectByExampleQueryId="false" tableName="role_permission" domainObjectName="RolePermission" 
+			></table> <table schema="user" enableCountByExample="false" enableUpdateByExample="false" 
+			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
+			tableName="user" domainObjectName="User" ></table> -->
+
+		<!-- <table schema="user_role" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"
+			tableName="user_role" domainObjectName="UserRole"></table> -->
+
+		<table schema="sc_category" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"
+			tableName="sc_category" domainObjectName="ScCategory"></table>
+
+		<table schema="fitwear_magent" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"
+			tableName="fitwear_magent" domainObjectName="FitwearMagent"></table>
+
+		<table schema="fitwear_app" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"
+			tableName="fitwear_app" domainObjectName="FitwearApp"></table>
+
+
+	</context>
 </generatorConfiguration>

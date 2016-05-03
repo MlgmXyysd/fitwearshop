@@ -108,4 +108,10 @@ public class PermissionServiceImpl implements PermissionService {
 		return p;
 	}
 
+	@Override
+	public List<Permission> getMenusList() {
+		// TODO Auto-generated method stub
+		return permissionMapper.getMenusList();
+	}
+
 }

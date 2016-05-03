@@ -43,7 +43,7 @@ var parentPermId;
 $(function(){   
 	menuDg=$('#menuDg').treegrid({  
 	method: "get",
-    url:'${ctx}/system/permission/menu/list.json', 
+    url:'${ctx}/system/permission/menu/mlist.json', 
     fit : true,
 	fitColumns : true,
 	border : false,

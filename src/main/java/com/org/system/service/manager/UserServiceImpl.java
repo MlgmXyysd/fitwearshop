@@ -3,6 +3,8 @@ package com.org.system.service.manager;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,20 @@ import com.org.utils.Encodes;
 @Service
 public class UserServiceImpl implements UserService {
 
+	public static Log log = LogFactory.getLog(UserServiceImpl.class);
 	@Autowired
 	private UserMapper userMapper;
 	@Autowired
 	private UserRoleMapper userRoleMapper;
 
 	public User getUser(String name) {
-		User user = userMapper.selectByUserName(name);
-		return user;
+		try {
+			User user = userMapper.selectByUserName(name);
+			return user;
+		} catch (Exception e) {
+			log.error("Error=========》["+e.getMessage()+"]");
+		}
+		return null;
 	}
 
 	public void updatePwd(User user) {

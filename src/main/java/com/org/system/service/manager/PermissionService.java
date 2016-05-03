@@ -37,6 +37,15 @@ public interface PermissionService {
 	 */
 	public List<Permission> getMenus();
 	
+	
+	/**
+	 * 获取所有菜单
+	 * @return 菜单集合
+	 */
+	public List<Permission> getMenusList();
+	
+	
+	
 	/**
 	 * 获取菜单下的操作
 	 * @param pid
