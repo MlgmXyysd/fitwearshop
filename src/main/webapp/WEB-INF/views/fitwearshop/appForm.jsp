@@ -29,7 +29,7 @@
 							</c:forEach>
 					</select></td>
 					<td>包名</td>
-					<td><input type="text" id="packagename" name="packagename" value="${fitwearApp.packagename}" class="easyui-textbox"/></td>
+					<td><input type="text" id="packagename" name="packagename" value="${fitwearApp.packagename}" class="easyui-validatebox"  data-options="required:true" /></td>
 				</tr>
 				<tr>
 					<td>开发者</td>
@@ -39,15 +39,15 @@
 				</tr>
 				<tr>
 					<td>版本名称</td>
-					<td><input type="text" id="vername" name="vername" value="${fitwearApp.vername}" class="easyui-textbox"/></td>
+					<td><input type="text" id="vername" name="vername" value="${fitwearApp.vername}" class="easyui-textbox" /></td>
 					<td>版本名称-En</td>
 					<td><input type="text" id="vernameEn" name="vernameEn" value="${fitwearApp.vernameEn}" class="easyui-textbox"/></td>
 				</tr>
 				<tr>
 					<td>版本号</td>
-					<td><input type="text" id="vercode" name="vercode" value="${fitwearApp.vercode}" class="easyui-validatebox"/></td>
+					<td><input type="text" id="vercode" name="vercode" value="${fitwearApp.vercode}" data-options="required:true" class="easyui-validatebox"/></td>
 					<td>排序</td>
-					<td><input type="text" id="sortorder" name="sortorder"
+					<td><input type="text" id="sortorder" name="sortorder" data-options="required:true"
 						value="${fitwearApp.sortorder}" class="easyui-validatebox"/></td>
 				</tr>
 				<tr>
@@ -65,15 +65,13 @@
 				<tr>
 					<td>LOGO上传</td>
 					<td colspan="3">
-					<input type="file" name="logofile" id="logofile"/>
-					<!-- <input class="easyui-filebox" style="width:300px" name="logofile" id="logofile" 
-					data-options="onChange:function(){alert($(this).filebox('getValue'))},prompt:'选择'"/> -->
+					<input type="file" name="logofile" id="logofile" />
 					</td>
 				</tr>
 				<tr>
 					<td>*LOGO地址</td>
 					<td colspan="3"><input type="text" id="logo" name="logo" value="${fitwearApp.logo}"
-					 style="width:300px"
+					 style="width:300px" readonly="readonly"
 					 class="easyui-textbox"/></td>
 				</tr>
 				<tr>
@@ -91,7 +89,7 @@
 					<td>截图地址</td>
 					<td colspan="3">
 					<input type="text" id="imgs" name="imgs" value="${fitwearApp.imgs}" 
-					style="width:300px"
+					style="width:300px" readonly="readonly"
 					class="easyui-textbox"/></td>
 				</tr>
 				<tr>
@@ -110,7 +108,7 @@
 				</tr>
 				<tr>
 					<td>手机应用地址</td>
-					<td colspan="3"><input type="text" id="mApk" name="mApk" value="${fitwearApp.mApk}"/>
+					<td colspan="3"><input type="text" id="mApk" name="mApk" value="${fitwearApp.mApk}" readonly="readonly"/>
 					<input type="hidden" id="mApkSize" name="mApkSize"  value="${fitwearApp.mApkSize}"/></td>
 				</tr>
 				<tr>
@@ -121,7 +119,7 @@
 				</tr>
 				<tr>
 					<td>手表应用地址</td>
-					<td colspan="3"><input type="text" id="fApk" name="fApk" value="${fitwearApp.fApk}"/>
+					<td colspan="3"><input type="text" id="fApk" name="fApk" value="${fitwearApp.fApk}" readonly="readonly"/>
 					<input type="hidden" id="fApkSize" name="fApkSize" value="${fitwearApp.fApkSize}" /></td>
 				</tr>
 				<c:if test="${ not empty magentList}">
@@ -129,7 +127,7 @@
 						<td>*支持机型</td>
 						<td colspan="3"><c:forEach var="var" items="${magentList}"
 								varStatus="status">
-								<input type="checkbox" name="magentlist" value="${var.magCode}"
+								<input type="checkbox" name="magentValues" value="${var.magCode}"
 									<c:if test="${fn:contains(magentValues,var.magCode)}">checked="checked"</c:if>>${var.magName}</input>
 							</c:forEach></td>
 					</tr>
@@ -145,10 +143,49 @@
 			$('#pid').val(parentPermId);
 		} else if (action == 'update') {
 			$('#pid').val(parentPermId);
-		}
-
+		} 
 		$('#mainform').form({
 			onSubmit : function() {
+				var action = "${action}"
+				if (action == 'create') {
+					// logo
+					if(($("#logofile").val()).length < 1){
+						alert();
+						return false
+					}
+					// cut
+					if($("#cutfile").val().length < 1){
+						return false
+					}
+					//fapk
+					if($("#fapkfile").val().length < 1){
+						return false
+					}
+					//mapk
+					if($("#mapkfile").val().length < 1){
+						return false
+					}
+				} else if (action == 'update') {
+					// logo
+					if($("#logo").val().length < 1){
+						return false
+					}
+					// cut
+					if($("#imgs").val().length < 1){
+						return false
+					}
+					//fapk
+					if($("#mApk").val().length < 1){
+						return false
+					}
+					//mapk
+					if($("#fApk").val().length < 1){
+						return false
+					}
+				}
+				if($("[name='magentValues'][checked]").val().lenth<1){
+					return false;
+				}
 				var isValid = $(this).form('validate');
 				return isValid; // 返回false终止表单提交
 			},

@@ -401,13 +401,11 @@
 	<sql id="modelwheresql">
 		<if test="appname != null">
 			and appname like
-				CONCAT('%',#{appname,jdbcType=VARCHAR},'%')
-		</if>
-		<if test="appnameEn != null">
-			and appname_en = #{appnameEn,jdbcType=VARCHAR}
+			CONCAT('%',#{appname,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="category != null">
-			and category = #{category,jdbcType=VARCHAR}
+			and category like
+			CONCAT('%',#{category,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="developer != null">
 			and developer = #{developer,jdbcType=VARCHAR}
@@ -458,7 +456,8 @@
 				CONCAT('%',#{param.appname,jdbcType=VARCHAR},'%')
 			</if>
 			<if test="param.category != null">
-				and category = #{param.category,jdbcType=VARCHAR}
+				and category like
+				CONCAT('%',#{param.category,jdbcType=VARCHAR},'%')
 			</if>
 			<if test="param.developer != null">
 				and developer = #{param.developer,jdbcType=VARCHAR}
@@ -476,6 +475,7 @@
 				and magentlist = #{param.magentlist,jdbcType=VARCHAR}
 			</if>
 		</if>
+		order by sortorder desc ,id desc
 		<if test="pageSize != null and first != null">
 			limit #{first,jdbcType=INTEGER},#{pageSize
 			,jdbcType=INTEGER}
@@ -498,5 +498,60 @@
 		FROM fitwear_app
 		WHERE 1=1 and isdel=0
 		<include refid="modelwheresql" />
+		order by sortorder desc ,id desc
+	</select>
+
+
+	<select id="selectByMapByC" resultMap="BaseResultMap">
+		SELECT
+		id, appname, appname_en, category, developer, developer_en,
+		vername,
+		vername_en,
+		vercode, summary, summary_en, descript_en,
+		descript, logo, imgs, imgs_en,
+		m_apk,
+		m_apk_en, f_apk, f_apk_en,
+		createtime, operater, isdel, sortorder, m_apk_size,
+		f_apk_size,
+		packagename, magentlist
+		FROM fitwear_app
+		WHERE isdel=0
+		<if test="category != null">
+			and category like
+			CONCAT('%',#{category,jdbcType=VARCHAR},'%' )
+		</if>
+		<if test="magentlist != null">
+			and magentlist like
+			CONCAT('%',#{magentlist,jdbcType=VARCHAR},'%' )
+		</if>
+		order by sortorder desc ,id desc
+		limit
+		#{first,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	<select id="selectByMapByN" resultMap="BaseResultMap">
+		SELECT
+		id, appname, appname_en, category, developer, developer_en,
+		vername,
+		vername_en,
+		vercode, summary, summary_en, descript_en,
+		descript, logo, imgs, imgs_en,
+		m_apk,
+		m_apk_en, f_apk, f_apk_en,
+		createtime, operater, isdel, sortorder, m_apk_size,
+		f_apk_size,
+		packagename, magentlist
+		FROM fitwear_app
+		WHERE isdel=0
+		<if test="appname != null">
+			and appname like
+			CONCAT('%',#{appname,jdbcType=VARCHAR},'%' )
+		</if>
+		<if test="magentlist != null">
+			and magentlist like
+			CONCAT('%',#{magentlist,jdbcType=VARCHAR},'%' )
+		</if>
+		order by sortorder desc ,id desc
+		limit
+		#{first,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
 	</select>
 </mapper>

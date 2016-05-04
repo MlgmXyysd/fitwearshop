@@ -144,7 +144,6 @@ $.fn.treegrid.defaults.loadFilter = function(data, parentId) {
 };
 
 /**
- * @author 孙宇
  * 
  * @requires jQuery,EasyUI
  * 

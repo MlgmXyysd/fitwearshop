@@ -39,6 +39,11 @@ public class Page<T> {
 	protected long totalCount = -1;
 	
 	protected T param;
+	
+	/**
+	 * 当前批次查询到的参数
+	 */
+	protected long count;
 
 	//-- 构造函数 --//
 	public Page() {
@@ -307,5 +312,12 @@ public class Page<T> {
 		this.param = param;
 	}
 
+	public long getCount() {
+		return count;
+	}
+
+	public void setCount(long count) {
+		this.count = count;
+	}
 	
 }

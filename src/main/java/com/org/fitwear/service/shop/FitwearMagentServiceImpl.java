@@ -41,7 +41,8 @@ public class FitwearMagentServiceImpl implements FitwearMagentService{
 
 	@Override
 	public List<FitwearMagent> getAll() {
-		return fitwearMagentMapper.queryList(null);
+		List<FitwearMagent> list = fitwearMagentMapper.queryList(null);
+		return list;
 	}
 
 	@Override

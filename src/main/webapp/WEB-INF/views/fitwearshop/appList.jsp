@@ -24,6 +24,9 @@
         <shiro:hasPermission name="fitshop:app:update">
         <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-edit" onclick="upd()">修改</a>
         </shiro:hasPermission>
+         <shiro:hasPermission name="fitshop:app:recommend">
+        <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-edit" onclick="recommend()">推荐</a>
+        </shiro:hasPermission>
     </div>
 </div>
 <table id="dg"></table>
@@ -54,7 +57,7 @@ $(function(){
         {field:'id',title:'id',width:20},    
         {field:'appname',title:'名称CN',width:80},
         {field:'appnameEn',title:'名称EN',width:80},
-        {field:'category',title:'分类',width:120},
+        {field:'categoryName',title:'分类',width:120},
         {field:'logo',title:'LOGO',width:120,
         	formatter:function(value, rec){//使用formatter格式化刷子
         		arr=value.split(","); 
@@ -80,8 +83,8 @@ $(function(){
     });
     $("#submit_search").click(function () {
         $('#dg').datagrid({ queryParams: {
-        	appname:$("#appname1").val(),
-        	category:$("#category1").combobox("getValue")
+        	appname: $.trim($("#appname1").val()),
+        	category:$.trim($("#category1").combobox("getValue"))
         	}});   //点击搜索
     });
 });
@@ -163,6 +166,24 @@ function del(){
 		} 
 	});
 
+}
+
+/**
+ * 推荐
+ */
+function recommend(){
+	var row = dg.treegrid('getSelected');
+		if (rowIsNull(row)){
+			return;
+		}
+		$.ajax({
+			type : 'get',
+			url : "${ctx}/fitshop/app/recommend/" + row.id,
+			success : function(data) {
+				if (successTip(data, dg))
+					dg.treegrid('reload');
+			}
+		});
 }
 var nowIcon;
 var icon_dlg;

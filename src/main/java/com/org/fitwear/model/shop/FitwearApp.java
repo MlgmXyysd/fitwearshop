@@ -61,11 +61,24 @@ public class FitwearApp {
 	private String packagename;
 
 	private String magentlist;
+	
+	private String[] magentValues;
+	
+	private String  categoryName;
+	
 
 //	private MultipartFile mapkfile;
 //	private MultipartFile fapkfile;
 //	private MultipartFile cutfile;
 //	private MultipartFile logofile;
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
 	public Long getId() {
 		return id;
@@ -290,6 +303,16 @@ public class FitwearApp {
 	public void setMagentlist(String magentlist) {
 		this.magentlist = magentlist == null ? null : magentlist.trim();
 	}
+
+	public String[] getMagentValues() {
+		return magentValues;
+	}
+
+	public void setMagentValues(String[] magentValues) {
+		this.magentValues = magentValues;
+	}
+
+	
 
 	/*public MultipartFile getMapkfile() {
 		return mapkfile;
