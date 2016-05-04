@@ -150,19 +150,22 @@
 				if (action == 'create') {
 					// logo
 					if(($("#logofile").val()).length < 1){
-						alert();
+						alert("上传图标");
 						return false
 					}
 					// cut
-					if($("#cutfile").val().length < 1){
+					/* if($("#cutfile").val().length < 1){
+						alert("上传图标");
 						return false
-					}
+					} */
 					//fapk
 					if($("#fapkfile").val().length < 1){
+						alert("手表端apk");
 						return false
 					}
 					//mapk
 					if($("#mapkfile").val().length < 1){
+						alert("手机端apk");
 						return false
 					}
 				} else if (action == 'update') {
@@ -183,8 +186,8 @@
 						return false
 					}
 				}
-				if($("[name='magentValues'][checked]").val().lenth<1){
-					return false;
+				if(!$("input[type='checkbox']").is(':checked')){
+					alert("请选择机型");
 				}
 				var isValid = $(this).form('validate');
 				return isValid; // 返回false终止表单提交

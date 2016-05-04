@@ -114,7 +114,7 @@ public class FitwearAppController extends BaseController {
 		MultipartFile fapkfile = multipartRequest.getFile("fapkfile");
 		MultipartFile cutfile = multipartRequest.getFile("cutfile");
 		MultipartFile logofile = multipartRequest.getFile("logofile");
-		String filepath = fileProUtil.getBasePag() + fitwearApp.getCategory();// 文件子目录
+		String filepath = fileProUtil.getBasePag() + fitwearApp.getCategory()+"/"+fitwearApp.getPackagename();// 文件子目录
 		String filerootpath = fileProUtil.getFileSavePath() + "/" + filepath + "/";// 完整目录
 		// logo
 		if (!logofile.isEmpty()) {
