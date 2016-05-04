@@ -59,20 +59,20 @@ public class FitwearAppController extends BaseController {
 	@RequiresPermissions("fitshop:app:view")
 	@RequestMapping(value = "list.json", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getData(HttpServletRequest request,@ModelAttribute FitwearApp fitwearApp) {
-		//查询所有
-		if(fitwearApp.getAppname() !=null && "".equals(fitwearApp.getAppname())){
+	public Map<String, Object> getData(HttpServletRequest request, @ModelAttribute FitwearApp fitwearApp) {
+		// 查询所有
+		if (fitwearApp.getAppname() != null && "".equals(fitwearApp.getAppname())) {
 			fitwearApp.setAppname(null);
 		}
-		Map<String ,String> map = scCateService.getMapAll();
+		Map<String, String> map = scCateService.getMapAll();
 		List<FitwearApp> list = new ArrayList<FitwearApp>();
-		if(fitwearApp!= null && "0".equals(fitwearApp.getCategory())){
+		if (fitwearApp != null && "0".equals(fitwearApp.getCategory())) {
 			fitwearApp.setCategory(null);
 		}
 		Page<FitwearApp> page = getPage(request, fitwearApp);
 		page = fitwearAppService.search(page, fitwearApp);
-		
-		for(FitwearApp app : page.getResult()){
+
+		for (FitwearApp app : page.getResult()) {
 			app.setCategoryName(map.get(app.getCategory()));
 			list.add(app);
 		}
@@ -114,26 +114,26 @@ public class FitwearAppController extends BaseController {
 		MultipartFile fapkfile = multipartRequest.getFile("fapkfile");
 		MultipartFile cutfile = multipartRequest.getFile("cutfile");
 		MultipartFile logofile = multipartRequest.getFile("logofile");
-		String filepath = fileProUtil.getBasePag() + fitwearApp.getCategory()+"/"+fitwearApp.getPackagename();// 文件子目录
+		String filepath = fileProUtil.getBasePag() + fitwearApp.getCategory() + "/" + fitwearApp.getPackagename();// 文件子目录
 		String filerootpath = fileProUtil.getFileSavePath() + "/" + filepath + "/";// 完整目录
 		// logo
 		if (!logofile.isEmpty()) {
 			String filename = logofile.getOriginalFilename();
-			String logo = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String logo = fileProUtil.getFileBakPath() + filepath + "/" + logofile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setLogo(logo);
 			filewriter(logofile, filerootpath + logofile.getName());
 		}
 		// 截图
 		if (!cutfile.isEmpty()) {
 			String filename = cutfile.getOriginalFilename();
-			String imgs = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String imgs = fileProUtil.getFileBakPath() + filepath + "/" + cutfile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setImgs(imgs);
 			filewriter(cutfile, filerootpath + cutfile.getName());
 		}
 		// 手机apk
 		if (!mapkfile.isEmpty()) {
 			String filename = mapkfile.getOriginalFilename();
-			String mApk = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String mApk = fileProUtil.getFileBakPath() + filepath + "/" + mapkfile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setmApk(mApk);
 			fitwearApp.setmApkSize(String.valueOf(mapkfile.getSize()));
 			filewriter(mapkfile, filerootpath + mapkfile.getName());
@@ -141,16 +141,16 @@ public class FitwearAppController extends BaseController {
 		// 手表apk
 		if (!fapkfile.isEmpty()) {
 			String filename = fapkfile.getOriginalFilename();
-			String fApk = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String fApk = fileProUtil.getFileBakPath() + filepath + "/" + mapkfile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setfApk(fApk);
 			fitwearApp.setfApkSize(String.valueOf(fapkfile.getSize()));
 			filewriter(fapkfile, filerootpath + fapkfile.getName());
 		}
-		//排序
-		if(fitwearApp.getSortorder()==null){
+		// 排序
+		if (fitwearApp.getSortorder() == null) {
 			fitwearApp.setSortorder("0");
 		}
-		if(fitwearApp.getIsdel()==null){
+		if (fitwearApp.getIsdel() == null) {
 			fitwearApp.setIsdel(0);
 		}
 		// 机型选择
@@ -202,21 +202,21 @@ public class FitwearAppController extends BaseController {
 		// logo
 		if (!logofile.isEmpty()) {
 			String filename = logofile.getOriginalFilename();
-			String logo = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String logo = fileProUtil.getFileBakPath() + filepath + "/" + logofile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setLogo(logo);
 			filewriter(logofile, filerootpath + logofile.getName());
 		}
 		// 截图
 		if (!cutfile.isEmpty()) {
 			String filename = cutfile.getOriginalFilename();
-			String imgs = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String imgs = fileProUtil.getFileBakPath() + filepath + "/" + cutfile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setImgs(imgs);
 			filewriter(cutfile, filerootpath + cutfile.getName());
 		}
 		// 手机apk
 		if (!mapkfile.isEmpty()) {
 			String filename = mapkfile.getOriginalFilename();
-			String mApk = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String mApk = fileProUtil.getFileBakPath() + filepath + "/" + mapkfile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setmApk(mApk);
 			fitwearApp.setmApkSize(String.valueOf(mapkfile.getSize()));
 			filewriter(mapkfile, filerootpath + mapkfile.getName());
@@ -224,7 +224,7 @@ public class FitwearAppController extends BaseController {
 		// 手表apk
 		if (!fapkfile.isEmpty()) {
 			String filename = fapkfile.getOriginalFilename();
-			String fApk = fileProUtil.getFileBakPath() + filepath + "/" + filename;// 下载子目录+文件名
+			String fApk = fileProUtil.getFileBakPath() + filepath + "/" + mapkfile.getName() + "/" + filename;// 下载子目录+文件名
 			fitwearApp.setfApk(fApk);
 			fitwearApp.setfApkSize(String.valueOf(fapkfile.getSize()));
 			filewriter(fapkfile, filerootpath + fapkfile.getName());
