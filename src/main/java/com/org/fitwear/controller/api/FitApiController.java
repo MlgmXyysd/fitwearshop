@@ -18,7 +18,7 @@ public class FitApiController extends ApiBaseController{
 	@Autowired
 	private FitwearAppService fitwearAppService;
 	
-	@RequestMapping(value = "sc")
+	@RequestMapping(value = "sc.json")
 	@ResponseBody
 	public String queryFitwearApK(HttpServletRequest request) {
 			//		id=7&p=1&pn=40&m=W150
@@ -36,7 +36,7 @@ public class FitApiController extends ApiBaseController{
 		return getSufJson(page);
 	} 
 	
-	@RequestMapping(value = "search")
+	@RequestMapping(value = "search.json")
 	@ResponseBody
 	public String seckFitwearApK(HttpServletRequest request) {
 			//		k=出行&p=1&pn=40&m=W150
